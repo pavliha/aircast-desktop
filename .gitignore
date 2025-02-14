@@ -1,0 +1,70 @@
+# Qt-specific
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+Makefile*
+*build-*
+*.qm
+*.prl
+
+# CMake-specific
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+
+# VSCode-specific
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+*.code-workspace
+
+# macOS-specific
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Compiler-specific
+*.o
+*.obj
+*.dll
+*.so
+*.dylib
+*.lib
+*.a
+*.app
+*.exe
+*.out
+
+# IDE-specific (Xcode, etc)
+*.xcodeproj
+*.xcworkspace
+*.swp
+*.swo
+*~
+
+# Generated files
+.qt/
+.qtc_clangd/
+.cache/

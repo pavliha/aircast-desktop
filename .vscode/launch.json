@@ -1,0 +1,34 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "qt6",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${command:cmake.launchTargetPath}",
+      "cwd": "${command:cmake.launchTargetDirectory}",
+      "environment": [
+        {
+          "name": "PATH",
+          "value": "${QTDIR}/bin:${env:PATH}"
+        },
+        {
+          "name": "DYLD_FRAMEWORK_PATH",
+          "value": "${QTDIR}/lib"
+        },
+        {
+          "name": "DYLD_LIBRARY_PATH",
+          "value": "${QTDIR}/lib"
+        }
+      ],
+      "MIMode": "lldb",
+      "sourceFileMap": {
+        "${workspaceFolder}/build/qt6_workdir/w/s": "${QTDIR}/../src",
+        "q:/qt6_workdir/w/s": "${QTDIR}/../src",
+        "${workspaceFolder}/install": "${QTDIR}/../src",
+        "${workspaceFolder}/qt": "${QTDIR}/../src"
+      },
+      "visualizerFile": "/Users/pavliha/Library/Application Support/Code/User/workspaceStorage/0d049e69fe87f2e2bb15398f06126283/tonka3000.qtvsctools/qt.natvis.xml"
+    }
+  ]
+}
