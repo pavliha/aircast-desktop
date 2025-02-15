@@ -4,25 +4,30 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 ApplicationWindow {
+    id: window
     width: 1200
     height: 800
     visible: true
     title: "AirCast"
     color: "#000000"
 
-    header: Header {}
-
-    ColumnLayout {
+    StackView {
+        id: stackView
         anchors.fill: parent
-        anchors.margins: 20
-        spacing: 20
+        initialItem: signInPage
+    }
 
-        TitleSection {}
-        InfoBanner {}
-        DeviceList {
-            model: deviceManager.devices
+    Component {
+        id: signInPage
+        SignInPage {
+            onSignInSuccessful: {
+                stackView.push(mainPage)
+            }
         }
     }
 
-    Component.onCompleted: deviceManager.fetchDevices()
+    Component {
+        id: mainPage
+        MainPage {}
+    }
 }

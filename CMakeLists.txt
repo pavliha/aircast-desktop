@@ -84,6 +84,8 @@ set(MYPROJECT_QML_FILES
     qml/DeviceList.qml
     qml/EmptyState.qml
     qml/DeviceDelegate.qml
+    qml/MainPage.qml
+    qml/SignInPage.qml
 )
 
 qt_add_qml_module(${PROJECT_NAME}
@@ -97,4 +99,5 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/icons/info.svg
         assets/icons/plus-circle.svg
         assets/icons/settings.svg
+        assets/icons/google.svg
 )
