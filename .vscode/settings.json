@@ -6,5 +6,8 @@
     "*.jcfg": "editorconfig",
     "qcoreapplication": "cpp",
     "qvboxlayout": "cpp"
-  }
+  },
+  "C_Cpp.clang_format_style": "file",
+  "C_Cpp.formatting": "clangFormat",
+  "editor.formatOnSave": true
 }
