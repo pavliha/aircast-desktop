@@ -52,6 +52,8 @@ qt6_policy(SET QTP0004 NEW)
 # -----------------------------------------------------------------------------
 qt_add_executable(${PROJECT_NAME}
     src/main.cpp
+    src/devicemanager.h
+    src/devicemanager.cpp
 )
 
 # Link the necessary Qt libraries to the executable
@@ -87,7 +89,7 @@ set(MYPROJECT_QML_FILES
 qt_add_qml_module(${PROJECT_NAME}
     URI myproject
     VERSION 1.0
-    RESOURCE_PREFIX "/myproject"
+    RESOURCE_PREFIX "/"
     QML_FILES ${MYPROJECT_QML_FILES}
     RESOURCES
         assets/icons/theme.svg

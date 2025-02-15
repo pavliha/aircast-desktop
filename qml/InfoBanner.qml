@@ -14,7 +14,7 @@ Rectangle {
     spacing: 10
 
     Image {
-      source: "qrc:/assets/icons/info.svg"
+      source: "qrc:/myproject/assets/icons/info.svg"
       width: 20
       height: 20
     }

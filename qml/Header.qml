@@ -21,7 +21,7 @@ ToolBar {
     Item { Layout.fillWidth: true }
 
     Button {
-      icon.source: "qrc:/assets/icons/theme.svg"
+      icon.source: "qrc:/myproject/assets/icons/theme.svg"
       flat: true
       background: Rectangle {
         color: "transparent"
@@ -35,7 +35,7 @@ ToolBar {
     }
 
     RoundButton {
-      icon.source: "qrc:/assets/icons/circle-user.svg"
+      icon.source: "qrc:/myproject/assets/icons/circle-user.svg"
       flat: true
     }
   }

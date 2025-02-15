@@ -1,14 +1,21 @@
 #include <QDirIterator>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQuickStyle>
 #include <QtCore/QtCore>
+
+#include "devicemanager.h"
 
 int main(int argc, char *argv[]) {
   QGuiApplication app(argc, argv);
   QQmlApplicationEngine engine;
+  QQuickStyle::setStyle("Basic");
 
-  const QUrl url(QStringLiteral("qrc:/myproject/myproject/qml/main.qml"));
+  DeviceManager deviceManager;
+  engine.rootContext()->setContextProperty("deviceManager", &deviceManager);
 
+  const QUrl url(QStringLiteral("qrc:/myproject/qml/main.qml"));
   engine.load(url);
 
   if (engine.rootObjects().isEmpty()) {

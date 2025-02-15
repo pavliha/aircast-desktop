@@ -7,7 +7,7 @@ ColumnLayout {
 
   Image {
     Layout.alignment: Qt.AlignHCenter
-    source: "qrc:/assets/icons/plus-circle.svg"
+    source: "qrc:/myproject/assets/icons/plus-circle.svg"
     width: 48
     height: 48
   }
