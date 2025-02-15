@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
   QGuiApplication app(argc, argv);
   QQmlApplicationEngine engine;
 
-  const QUrl url(QStringLiteral("qrc:/myproject/qml/main.qml"));
+  const QUrl url(QStringLiteral("qrc:/myproject/myproject/qml/main.qml"));
 
   engine.load(url);
 
