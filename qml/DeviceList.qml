@@ -26,4 +26,4 @@ Rectangle {
 
       delegate: DeviceDelegate {}
     }
-  }
+}

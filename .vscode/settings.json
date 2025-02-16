@@ -12,7 +12,6 @@
   "editor.formatOnSave": true,
   "[qml]": {
       "editor.formatOnSave": true,
-      "editor.defaultFormatter": "AndreOneti.qml-formatter"
+      "editor.defaultFormatter": "theqtcompany.qt-qml"
   },
- 
 }

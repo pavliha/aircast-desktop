@@ -56,7 +56,9 @@ qt_add_executable(${PROJECT_NAME}
     src/devicemanager.cpp
 )
 
-# Link the necessary Qt libraries to the executable
+# -----------------------------------------------------------------------------
+# Link Qt libraries and set compile definitions
+# -----------------------------------------------------------------------------
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Core
     Qt6::Gui
@@ -65,16 +67,13 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::QuickControls2
 )
 
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    QT_QML_DEBUG
+    QML_IMPORT_PATH="${CMAKE_BINARY_DIR}"
+)
+
 # -----------------------------------------------------------------------------
-# Specify the QML module
-#
-# The following configuration embeds your QML files and resource files into the
-# Qt resource system. The module is given the URI "myproject" with version 1.0,
-# and the RESOURCE_PREFIX controls the top-level path within the resource file.
-#
-# NOTE: If your QML files are stored in a subdirectory (e.g., "qml/"), the module
-# system may preserve that subfolder in the resource path. Adjust your QML load
-# paths in your code accordingly.
+# Define QML files for the project
 # -----------------------------------------------------------------------------
 set(MYPROJECT_QML_FILES
     qml/main.qml
@@ -86,8 +85,25 @@ set(MYPROJECT_QML_FILES
     qml/DeviceDelegate.qml
     qml/MainPage.qml
     qml/SignInPage.qml
+    qml/LinkText.qml
+    qml/Separator.qml
+
+    # UI Components
+    qml/ui/Button.qml
+    qml/ui/Theme.qml
+
+    # Card Components
+    qml/ui/card/Card.qml
+    qml/ui/card/CardContent.qml
+    qml/ui/card/CardDescription.qml
+    qml/ui/card/CardFooter.qml
+    qml/ui/card/CardHeader.qml
+    qml/ui/card/CardTitle.qml
 )
 
+# -----------------------------------------------------------------------------
+# Configure QML module with linting and type checking enabled
+# -----------------------------------------------------------------------------
 qt_add_qml_module(${PROJECT_NAME}
     URI myproject
     VERSION 1.0
@@ -100,4 +116,6 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/icons/plus-circle.svg
         assets/icons/settings.svg
         assets/icons/google.svg
+        assets/icons/arrow-right.svg
 )
+

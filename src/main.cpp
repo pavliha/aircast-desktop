@@ -15,6 +15,9 @@ int main(int argc, char *argv[]) {
   DeviceManager deviceManager;
   engine.rootContext()->setContextProperty("deviceManager", &deviceManager);
 
+  engine.addImportPath("qrc:///");
+  engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
+
   const QUrl url(QStringLiteral("qrc:/myproject/qml/main.qml"));
   engine.load(url);
 
