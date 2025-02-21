@@ -26,9 +26,21 @@ QtObject {
     // Helper function to adjust alpha.
     // Assumes the color is in the format "#RRGGBB"
     function withAlpha(col, alpha) {
-        var r = parseInt(col.substring(1, 3), 16) / 255;
-        var g = parseInt(col.substring(3, 5), 16) / 255;
-        var b = parseInt(col.substring(5, 7), 16) / 255;
-        return Qt.rgba(r, g, b, alpha);
+        // If color is already a Qt color object
+        if (typeof col === 'object') {
+            return Qt.rgba(col.r, col.g, col.b, alpha);
+        }
+
+        // If color is a hex string
+        if (typeof col === 'string' && col.startsWith('#')) {
+            var r = parseInt(col.substring(1, 3), 16) / 255;
+            var g = parseInt(col.substring(3, 5), 16) / 255;
+            var b = parseInt(col.substring(5, 7), 16) / 255;
+            return Qt.rgba(r, g, b, alpha);
+        }
+
+        // Fallback
+        console.warn("Invalid color format:", col);
+        return Qt.rgba(0, 0, 0, alpha);
     }
 }
