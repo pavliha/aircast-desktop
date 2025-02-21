@@ -1,9 +1,10 @@
 import QtQuick
 import QtQuick.Controls
+import myproject 1.0
 
 Text {
-    text: ""
-    font.pixelSize: 14 // text-sm equivalent
     color: Theme.mutedForeground
+    font.pixelSize: 14  // text-sm
+    lineHeight: 1.5
     wrapMode: Text.WordWrap
 }

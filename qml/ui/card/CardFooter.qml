@@ -5,16 +5,13 @@ import QtQuick.Layouts
 Rectangle {
     id: root
     color: "transparent"
-    implicitHeight: footerRow.implicitHeight + 24 // p-6 equivalent
+    implicitHeight: footerLayout.implicitHeight
 
-    // Expose a default property for child items
-    default property alias content: footerRow.data
+    default property alias content: footerLayout.data
 
-    Row {
-        id: footerRow
+    ColumnLayout {
+        id: footerLayout
         anchors.fill: parent
-        anchors.margins: 24 // p-6 equivalent
-        anchors.topMargin: 0 // pt-0 equivalent
-        spacing: 8
+        spacing: 16  // space-y-4
     }
 }

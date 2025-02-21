@@ -1,67 +1,74 @@
-import QtQuick 2.15
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.15
+// Card.qml
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 import myproject 1.0
 
 Rectangle {
     id: root
 
-    // Properties to match React component functionality
+    // Properties to match shadcn structure
     property alias content: contentLoader.sourceComponent
     property alias header: headerLoader.sourceComponent
     property alias footer: footerLoader.sourceComponent
-    property string className: ""
 
-    // Default styling to match React/Tailwind
+    // Shadcn styling
     color: Theme.card
     border.color: Theme.border
     border.width: 1
     radius: Theme.radius
 
-    // Modern Qt6 shadow using multiple rectangles
+    // Multi-layer shadow implementation
     Rectangle {
-        id: shadow
+        id: shadow1
+        anchors.fill: parent
+        anchors.margins: -1
+        radius: parent.radius + 1
+        color: "transparent"
+        border.color: Qt.rgba(0, 0, 0, 0.1)
+        border.width: 1
+        z: -1
+    }
+
+    Rectangle {
+        id: shadow2
         anchors.fill: parent
         anchors.margins: -2
         radius: parent.radius + 2
         color: "transparent"
-        z: -1
-
-        Rectangle {
-            anchors.fill: parent
-            color: "#1a000000"
-            radius: parent.radius
-            opacity: 0.2
-        }
+        border.color: Qt.rgba(0, 0, 0, 0.05)
+        border.width: 1
+        z: -2
     }
 
-    // Layout
+    // Layout structure matching shadcn
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
 
-        // Header
         Loader {
             id: headerLoader
             Layout.fillWidth: true
-            Layout.preferredHeight: item ? item.height : 0
-            visible: sourceComponent != null
+            Layout.margins: 24  // p-6
+            Layout.bottomMargin: contentLoader.sourceComponent ? 0 : 24
+            visible: sourceComponent !== null
         }
 
-        // Content
         Loader {
             id: contentLoader
             Layout.fillWidth: true
-            Layout.fillHeight: true
-            visible: sourceComponent != null
+            Layout.margins: 24  // p-6
+            Layout.topMargin: headerLoader.sourceComponent ? 0 : 24
+            Layout.bottomMargin: footerLoader.sourceComponent ? 0 : 24
+            visible: sourceComponent !== null
         }
 
-        // Footer
         Loader {
             id: footerLoader
             Layout.fillWidth: true
-            Layout.preferredHeight: item ? item.height : 0
-            visible: sourceComponent != null
+            Layout.margins: 24  // p-6
+            Layout.topMargin: contentLoader.sourceComponent ? 0 : 24
+            visible: sourceComponent !== null
         }
     }
 }

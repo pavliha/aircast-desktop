@@ -1,11 +1,11 @@
 import QtQuick
 import QtQuick.Controls
+import myproject 1.0
 
 Text {
-    text: ""
-    font.pixelSize: 24 // text-2xl equivalent
-    font.weight: Font.DemiBold
     color: Theme.cardForeground
-    lineHeight: 1
+    font.pixelSize: 24  // text-2xl
+    font.weight: Font.Medium
+    lineHeight: 1.2
     elide: Text.ElideRight
 }
