@@ -1,4 +1,3 @@
-// SignInCard.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -22,8 +21,8 @@ Card {
 
     content: CardContent {
         ColumnLayout {
+            Layout.fillWidth: true
             spacing: 24
-            width: parent.width
 
             SignInWithGoogleButton {}
             ProtectedByAirCast {}
@@ -32,7 +31,7 @@ Card {
 
     footer: CardFooter {
         ColumnLayout {
-            width: parent.width
+            Layout.fillWidth: true
             spacing: 8
 
             Text {
@@ -47,10 +46,6 @@ Card {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter
                 spacing: 4
-
-                Item {
-                    Layout.fillWidth: true
-                }  // Spacer
 
                 LinkText {
                     text: "Terms of Service"
@@ -69,10 +64,6 @@ Card {
                     hoverable: true
                     onClicked: Qt.openUrlExternally("https://aircast.one/privacy")
                 }
-
-                Item {
-                    Layout.fillWidth: true
-                }  // Spacer
             }
         }
     }

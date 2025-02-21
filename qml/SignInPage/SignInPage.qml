@@ -23,24 +23,33 @@ Page {
         }
     }
 
-    // Main content container
-    ColumnLayout {
-        // Center horizontally and vertically with some padding
-        anchors {
-            centerIn: parent
-            topMargin: 48
-            bottomMargin: 48
-        }
+    // This Rectangle is our main container with a max width of 480
+    Rectangle {
+        id: container
+        anchors.centerIn: parent
+        // Enforce a max width of 480 or (parent.width - 32) if screen is small
         width: Math.min(parent.width - 32, 480)
-        spacing: 32  // Increased spacing between major sections
+        height: contentLayout.implicitHeight
+        color: "transparent"
 
-        BrandSection {}
-
-        SignInCard {
+        ColumnLayout {
+            id: contentLayout
+            anchors.centerIn: parent
             Layout.fillWidth: true
-            Layout.preferredHeight: implicitHeight
-        }
+            spacing: 32
 
-        SupportSection {}
+            BrandSection {
+                Layout.fillWidth: true
+            }
+
+            SignInCard {
+                Layout.fillWidth: true
+                onSignInSuccessful: root.signInSuccessful()
+            }
+
+            SupportSection {
+                Layout.fillWidth: true
+            }
+        }
     }
 }

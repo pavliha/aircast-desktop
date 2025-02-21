@@ -7,7 +7,11 @@ RowLayout {
     Layout.fillWidth: true
     Layout.topMargin: 16
     Layout.alignment: Qt.AlignHCenter
-    spacing: 8  // Increased spacing between text elements
+    spacing: 8
+
+    Item {
+        Layout.fillWidth: true
+    }
 
     Text {
         text: "Need help?"
@@ -21,5 +25,9 @@ RowLayout {
         font.weight: Font.Medium
         hoverable: true
         onClicked: Qt.openUrlExternally("https://aircast.one/support")
+    }
+
+    Item {
+        Layout.fillWidth: true
     }
 }
