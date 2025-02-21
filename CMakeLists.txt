@@ -78,12 +78,12 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 set(MYPROJECT_QML_FILES
     qml/main.qml
     qml/Header.qml
-    qml/TitleSection.qml
-    qml/InfoBanner.qml
-    qml/DeviceList.qml
-    qml/EmptyState.qml
-    qml/DeviceDelegate.qml
-    qml/MainPage.qml
+    qml/MainPage/TitleSection.qml
+    qml/MainPage/InfoBanner.qml
+    qml/MainPage/DeviceList.qml
+    qml/MainPage/EmptyState.qml
+    qml/MainPage/DeviceDelegate.qml
+    qml/MainPage/MainPage.qml
     qml/SignInPage/SignInPage.qml
     qml/SignInPage/ProtectedByAirCast.qml
     qml/SignInPage/SignInCard.qml
@@ -117,6 +117,9 @@ set_source_files_properties(${MYPROJECT_QML_SINGLETON_FILES}
     QT_QML_SINGLETON_TYPE TRUE
 )
 
+
+# Enable the generation of the QMLLS config file
+set(QT_QML_GENERATE_QMLLS_INI ON)
 
 # -----------------------------------------------------------------------------
 # Configure QML module with linting and type checking enabled

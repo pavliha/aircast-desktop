@@ -68,3 +68,4 @@ _deps
 .qt/
 .qtc_clangd/
 .cache/
+.qmlls.ini

@@ -25,6 +25,7 @@ Card {
             spacing: 24
 
             SignInWithGoogleButton {}
+
             ProtectedByAirCast {}
         }
     }
