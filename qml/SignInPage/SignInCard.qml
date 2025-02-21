@@ -4,29 +4,31 @@ import QtQuick.Layouts
 import myproject 1.0
 
 Card {
+    id: signInCard
     Layout.fillWidth: true
     Layout.topMargin: 32
 
-    // Use dark card color and white text
+    // Use dark card color
     color: Theme.card
-    // If your custom Card component uses Theme.card internally,
-    // that is enough. But ensure it references a dark color.
 
     header: CardHeader {
-        CardTitle {
+        title: CardTitle {
             text: "Sign in"
             horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
         }
-        CardDescription {
+        description: CardDescription {
             text: "Choose your preferred sign in method"
             horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
         }
     }
 
     content: CardContent {
         ColumnLayout {
-            spacing: 16
+            id: contentLayout
             width: parent.width
+            spacing: 24  // Increased spacing between button and separator
 
             // Google Sign In Button
             Button {
@@ -34,37 +36,37 @@ Card {
                 Layout.fillWidth: true
                 variant: "outline"
                 size: "lg"
+                height: 40  // Explicit height to match design
 
-                contentItem: Component {
-                    RowLayout {
-                        spacing: 12
-                        Image {
-                            source: "qrc:/myproject/assets/icons/google.svg"
-                            sourceSize: Qt.size(20, 20)
-                        }
-                        Text {
-                            text: "Continue with Google"
-                            color: Theme.foreground
-                            font.pixelSize: 14
-                            font.weight: Font.Medium
-                            Layout.fillWidth: true
-                        }
-                        Image {
-                            id: arrowIcon
-                            source: "qrc:/myproject/assets/icons/arrow-right.svg"
-                            sourceSize: Qt.size(16, 16)
-                            opacity: googleButton.hovered ? 1 : 0
-                            x: googleButton.hovered ? 0 : -8
+                contentItem: RowLayout {
+                    spacing: 12
+                    Item {
+                        // Left spacing
+                        Layout.preferredWidth: 12
+                    }
+                    Image {
+                        source: "qrc:/myproject/assets/icons/google.svg"
+                        sourceSize: Qt.size(20, 20)
+                    }
+                    Text {
+                        text: "Continue with Google"
+                        color: Theme.foreground
+                        font.pixelSize: 14
+                        font.weight: Font.Medium
+                        Layout.fillWidth: true
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+                    Image {
+                        id: arrowIcon
+                        source: "qrc:/myproject/assets/icons/arrow-right.svg"
+                        sourceSize: Qt.size(16, 16)
+                        opacity: googleButton.hovered ? 1 : 0
+                        Layout.preferredWidth: 16
+                        Layout.rightMargin: 12
 
-                            Behavior on opacity {
-                                NumberAnimation {
-                                    duration: 150
-                                }
-                            }
-                            Behavior on x {
-                                NumberAnimation {
-                                    duration: 150
-                                }
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 150
                             }
                         }
                     }
@@ -74,14 +76,17 @@ Card {
             }
 
             // Protected Text with Separator
-            ProtectedByAirCast {}
+            ProtectedByAirCast {
+                Layout.fillWidth: true
+                Layout.topMargin: 8
+            }
         }
     }
 
     footer: CardFooter {
         ColumnLayout {
             width: parent.width
-            spacing: 16
+            spacing: 8
 
             Text {
                 Layout.fillWidth: true
@@ -92,8 +97,13 @@ Card {
             }
 
             RowLayout {
+                Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter
                 spacing: 4
+
+                Item {
+                    Layout.fillWidth: true
+                }  // Spacer
 
                 LinkText {
                     text: "Terms of Service"
@@ -112,6 +122,10 @@ Card {
                     hoverable: true
                     onClicked: Qt.openUrlExternally("https://aircast.one/privacy")
                 }
+
+                Item {
+                    Layout.fillWidth: true
+                }  // Spacer
             }
         }
     }

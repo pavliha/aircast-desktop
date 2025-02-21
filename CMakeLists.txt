@@ -87,6 +87,8 @@ set(MYPROJECT_QML_FILES
     qml/SignInPage/SignInPage.qml
     qml/SignInPage/ProtectedByAirCast.qml
     qml/SignInPage/SignInCard.qml
+    qml/SignInPage/BrandSection.qml
+    qml/SignInPage/SupportSection.qml
     qml/LinkText.qml
     qml/Separator.qml
 

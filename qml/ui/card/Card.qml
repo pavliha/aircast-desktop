@@ -12,9 +12,9 @@ Rectangle {
     property alias header: headerLoader.sourceComponent
     property alias footer: footerLoader.sourceComponent
 
-    // Shadcn styling
+    // Shadcn styling using Theme colors
     color: Theme.card
-    border.color: Theme.border
+    border.color: Theme.withAlpha(Theme.border, 0.1)  // Subtle border
     border.width: 1
     radius: Theme.radius
 
@@ -25,7 +25,7 @@ Rectangle {
         anchors.margins: -1
         radius: parent.radius + 1
         color: "transparent"
-        border.color: Qt.rgba(0, 0, 0, 0.1)
+        border.color: Theme.withAlpha(Theme.border, 0.1)
         border.width: 1
         z: -1
     }
@@ -36,7 +36,7 @@ Rectangle {
         anchors.margins: -2
         radius: parent.radius + 2
         color: "transparent"
-        border.color: Qt.rgba(0, 0, 0, 0.05)
+        border.color: Theme.withAlpha(Theme.border, 0.05)
         border.width: 1
         z: -2
     }
