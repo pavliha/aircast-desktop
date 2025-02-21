@@ -11,7 +11,7 @@ Rectangle {
     property bool disabled: false
     property string variant: "default"  // default, destructive, outline, secondary, ghost, link
     property string size: "default"     // default, sm, lg, icon
-    property Item contentItem: defaultContent
+    property Component contentItem: defaultContent
     signal clicked
 
     // Private properties
@@ -50,12 +50,12 @@ Rectangle {
             "default": {
                 background: Theme.primary,
                 textColor: Theme.primaryForeground,
-                hoverBackground: Qt.rgba(Theme.primary.r, Theme.primary.g, Theme.primary.b, 0.9)
+                hoverBackground: Theme.withAlpha(Theme.primary, 0.9)
             },
             "destructive": {
                 background: Theme.destructive,
                 textColor: Theme.destructiveForeground,
-                hoverBackground: Qt.rgba(Theme.destructive.r, Theme.destructive.g, Theme.destructive.b, 0.9)
+                hoverBackground: Theme.withAlpha(Theme.destructive, 0.9)
             },
             "outline": {
                 background: Theme.background,
@@ -67,7 +67,7 @@ Rectangle {
             "secondary": {
                 background: Theme.secondary,
                 textColor: Theme.secondaryForeground,
-                hoverBackground: Qt.rgba(Theme.secondary.r, Theme.secondary.g, Theme.secondary.b, 0.8)
+                hoverBackground: Theme.withAlpha(Theme.secondary, 0.8)
             },
             "ghost": {
                 background: "transparent",
@@ -128,7 +128,7 @@ Rectangle {
             font.weight: Font.Medium
             color: {
                 if (root.disabled)
-                    return Qt.rgba(variantConfigs[root.variant].textColor.r, variantConfigs[root.variant].textColor.g, variantConfigs[root.variant].textColor.b, 0.5);
+                    return Theme.withAlpha(variantConfigs[root.variant].textColor, 0.5);
                 if (root.hovered && variantConfigs[root.variant].hoverTextColor)
                     return variantConfigs[root.variant].hoverTextColor;
                 return variantConfigs[root.variant].textColor;

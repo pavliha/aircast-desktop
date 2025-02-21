@@ -90,7 +90,6 @@ set(MYPROJECT_QML_FILES
 
     # UI Components
     qml/ui/Button.qml
-    qml/ui/Theme.qml
 
     # Card Components
     qml/ui/card/Card.qml
@@ -101,6 +100,19 @@ set(MYPROJECT_QML_FILES
     qml/ui/card/CardTitle.qml
 )
 
+
+# Define singleton QML files separately
+set(MYPROJECT_QML_SINGLETON_FILES
+    qml/ui/Theme.qml
+)
+
+# Set the singleton property for Theme.qml
+set_source_files_properties(${MYPROJECT_QML_SINGLETON_FILES} 
+    PROPERTIES 
+    QT_QML_SINGLETON_TYPE TRUE
+)
+
+
 # -----------------------------------------------------------------------------
 # Configure QML module with linting and type checking enabled
 # -----------------------------------------------------------------------------
@@ -108,7 +120,9 @@ qt_add_qml_module(${PROJECT_NAME}
     URI myproject
     VERSION 1.0
     RESOURCE_PREFIX "/"
-    QML_FILES ${MYPROJECT_QML_FILES}
+    QML_FILES 
+        ${MYPROJECT_QML_FILES}
+        ${MYPROJECT_QML_SINGLETON_FILES}
     RESOURCES
         assets/icons/theme.svg
         assets/icons/circle-user.svg
@@ -118,4 +132,5 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/icons/google.svg
         assets/icons/arrow-right.svg
 )
+
 

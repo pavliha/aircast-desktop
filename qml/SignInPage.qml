@@ -15,7 +15,7 @@ Page {
             orientation: Gradient.Vertical
             GradientStop {
                 position: 0.0
-                color: Qt.rgba(Theme.primary.r, Theme.primary.g, Theme.primary.b, 0.05)
+                color: Theme.primary
             }
             GradientStop {
                 position: 1.0
@@ -66,132 +66,136 @@ Page {
             Layout.fillWidth: true
             Layout.topMargin: 32
 
-            // header: CardHeader {
-            //     // CardTitle {
-            //     //     // text: "Sign in"
-            //     //     // horizontalAlignment: Text.AlignHCenter
-            //     // }
-            //     // CardDescription {
-            //     //     text: "Choose your preferred sign in method"
-            //     //     horizontalAlignment: Text.AlignHCenter
-            //     // }
-            // }
+            header: CardHeader {
+                // text: "Sign in"
+                // horizontalAlignment: Text.AlignHCenter
+                CardTitle {}
+                CardDescription {
+                    text: "Choose your preferred sign in method"
+                    horizontalAlignment: Text.AlignHCenter
+                }
+            }
 
-            // content: CardContent {
-            //     ColumnLayout {
-            //         spacing: 16
-            //         width: parent.width
+            content: CardContent {
+                ColumnLayout {
+                    spacing: 16
+                    width: parent.width
 
-            //         // Google Sign In Button
-            //         Button {
-            //             Layout.fillWidth: true
-            //             variant: "outline"
-            //             size: "lg"
+                    // Google Sign In Button
+                    Button {
+                        id: googleButton  // add an id so we can refer to its properties
+                        Layout.fillWidth: true
+                        variant: "outline"
+                        size: "lg"
 
-            //             contentItem: RowLayout {
-            //                 spacing: 12
-            //                 Image {
-            //                     source: "qrc:/myproject/assets/icons/google.svg"
-            //                     sourceSize: Qt.size(20, 20)
-            //                 }
-            //                 Text {
-            //                     text: "Continue with Google"
-            //                     color: Theme.foreground
-            //                     font.pixelSize: 14
-            //                     font.weight: Font.Medium
-            //                     Layout.fillWidth: true
-            //                 }
-            //                 Image {
-            //                     id: arrowIcon
-            //                     source: "qrc:/myproject/assets/icons/arrow-right.svg"
-            //                     sourceSize: Qt.size(16, 16)
-            //                     opacity: parent.parent.hovered ? 1 : 0
-            //                     x: parent.parent.hovered ? 0 : -8
+                        contentItem: Component {
+                            RowLayout {
+                                spacing: 12
+                                Image {
+                                    source: "qrc:/myproject/assets/icons/google.svg"
+                                    sourceSize: Qt.size(20, 20)
+                                }
+                                Text {
+                                    text: "Continue with Google"
+                                    color: Theme.foreground
+                                    font.pixelSize: 14
+                                    font.weight: Font.Medium
+                                    Layout.fillWidth: true
+                                }
+                                Image {
+                                    id: arrowIcon
+                                    source: "qrc:/myproject/assets/icons/arrow-right.svg"
+                                    sourceSize: Qt.size(16, 16)
+                                    // Use the button’s hovered property
+                                    opacity: googleButton.hovered ? 1 : 0
+                                    x: googleButton.hovered ? 0 : -8
 
-            //                     Behavior on opacity {
-            //                         NumberAnimation {
-            //                             duration: 150
-            //                         }
-            //                     }
-            //                     Behavior on x {
-            //                         NumberAnimation {
-            //                             duration: 150
-            //                         }
-            //                     }
-            //                 }
-            //             }
+                                    Behavior on opacity {
+                                        NumberAnimation {
+                                            duration: 150
+                                        }
+                                    }
+                                    Behavior on x {
+                                        NumberAnimation {
+                                            duration: 150
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
-            //             onClicked: root.signInSuccessful()
-            //         }
+                        onClicked: root.signInSuccessful()
+                    }
 
-            //         // Protected Text with Separator
-            //         Item {
-            //             Layout.fillWidth: true
-            //             Layout.preferredHeight: 40
+                    // Protected Text with Separator
+                    Item {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 40
 
-            //             Rectangle {
-            //                 anchors.centerIn: parent
-            //                 width: parent.width
-            //                 height: 1
-            //                 color: Theme.border
-            //             }
+                        Rectangle {
+                            anchors.centerIn: parent
+                            width: parent.width
+                            height: 1
+                            color: Theme.border
+                        }
 
-            //             Rectangle {
-            //                 anchors.centerIn: parent
-            //                 width: protectedText.width + 16
-            //                 height: protectedText.height
-            //                 color: Theme.card
-            //             }
+                        Rectangle {
+                            anchors.centerIn: parent
+                            width: protectedText.width + 16
+                            height: protectedText.height
+                            color: Theme.card
+                        }
 
-            //             Text {
-            //                 id: protectedText
-            //                 anchors.centerIn: parent
-            //                 text: "PROTECTED BY AIRCAST"
-            //                 color: Theme.mutedForeground
-            //                 font.pixelSize: 12
-            //                 font.weight: Font.Medium
-            //             }
-            //         }
-            //     }
-            // }
+                        Text {
+                            id: protectedText
+                            anchors.centerIn: parent
+                            text: "PROTECTED BY AIRCAST"
+                            color: Theme.mutedForeground
+                            font.pixelSize: 12
+                            font.weight: Font.Medium
+                        }
+                    }
+                }
+            }
 
-            // footer: CardFooter {
-            //     ColumnLayout {
-            //         width: parent.width
-            //         spacing: 16
+            footer: CardFooter {
+                ColumnLayout {
+                    // Child items will be assigned to the CardFooter’s default "content" property
+                    width: parent.width
+                    spacing: 16
 
-            //         Text {
-            //             Layout.fillWidth: true
-            //             text: "By clicking continue, you agree to our"
-            //             color: Theme.mutedForeground
-            //             font.pixelSize: 12
-            //             horizontalAlignment: Text.AlignHCenter
-            //         }
+                    Text {
+                        Layout.fillWidth: true
+                        text: "By clicking continue, you agree to our"
+                        color: Theme.mutedForeground
+                        font.pixelSize: 12
+                        horizontalAlignment: Text.AlignHCenter
+                    }
 
-            //         RowLayout {
-            //             Layout.alignment: Qt.AlignHCenter
-            //             spacing: 4
+                    RowLayout {
+                        Layout.alignment: Qt.AlignHCenter
+                        spacing: 4
 
-            //             LinkText {
-            //                 text: "Terms of Service"
-            //                 hoverable: true
-            //                 onClicked: Qt.openUrlExternally("https://aircast.one/terms")
-            //             }
+                        LinkText {
+                            text: "Terms of Service"
+                            hoverable: true
+                            onClicked: Qt.openUrlExternally("https://aircast.one/terms")
+                        }
 
-            //             Text {
-            //                 text: "and"
-            //                 color: Theme.mutedForeground
-            //                 font.pixelSize: 12
-            //             }
+                        Text {
+                            text: "and"
+                            color: Theme.mutedForeground
+                            font.pixelSize: 12
+                        }
 
-            //             LinkText {
-            //                 text: "Privacy Policy"
-            //                 hoverable: true
-            //                 onClicked: Qt.openUrlExternally("https://aircast.one/privacy")
-            //             }
-            //         }
-            //     }
-            // }
+                        LinkText {
+                            text: "Privacy Policy"
+                            hoverable: true
+                            onClicked: Qt.openUrlExternally("https://aircast.one/privacy")
+                        }
+                    }
+                }
+            }
         }
 
         // Support Section
