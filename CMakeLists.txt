@@ -89,6 +89,7 @@ set(MYPROJECT_QML_FILES
     qml/SignInPage/SignInCard.qml
     qml/SignInPage/BrandSection.qml
     qml/SignInPage/SupportSection.qml
+    qml/SignInPage/SignInWithGoogleButton.qml
     qml/LinkText.qml
     qml/Separator.qml
 

@@ -1,85 +1,32 @@
+// SignInCard.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import myproject 1.0
 
 Card {
-    id: signInCard
+    id: root
     Layout.fillWidth: true
     Layout.topMargin: 32
-
-    // Use dark card color
-    color: Theme.card
 
     header: CardHeader {
         title: CardTitle {
             text: "Sign in"
             horizontalAlignment: Text.AlignHCenter
-            Layout.fillWidth: true
         }
         description: CardDescription {
             text: "Choose your preferred sign in method"
             horizontalAlignment: Text.AlignHCenter
-            Layout.fillWidth: true
         }
     }
 
     content: CardContent {
         ColumnLayout {
-            id: contentLayout
+            spacing: 24
             width: parent.width
-            spacing: 24  // Increased spacing between button and separator
 
-            // Google Sign In Button
-            Button {
-                id: googleButton
-                Layout.fillWidth: true
-                variant: "outline"
-                size: "lg"
-                height: 40  // Explicit height to match design
-
-                contentItem: RowLayout {
-                    spacing: 12
-                    Item {
-                        // Left spacing
-                        Layout.preferredWidth: 12
-                    }
-                    Image {
-                        source: "qrc:/myproject/assets/icons/google.svg"
-                        sourceSize: Qt.size(20, 20)
-                    }
-                    Text {
-                        text: "Continue with Google"
-                        color: Theme.foreground
-                        font.pixelSize: 14
-                        font.weight: Font.Medium
-                        Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignHCenter
-                    }
-                    Image {
-                        id: arrowIcon
-                        source: "qrc:/myproject/assets/icons/arrow-right.svg"
-                        sourceSize: Qt.size(16, 16)
-                        opacity: googleButton.hovered ? 1 : 0
-                        Layout.preferredWidth: 16
-                        Layout.rightMargin: 12
-
-                        Behavior on opacity {
-                            NumberAnimation {
-                                duration: 150
-                            }
-                        }
-                    }
-                }
-
-                onClicked: root.signInSuccessful()
-            }
-
-            // Protected Text with Separator
-            ProtectedByAirCast {
-                Layout.fillWidth: true
-                Layout.topMargin: 8
-            }
+            SignInWithGoogleButton {}
+            ProtectedByAirCast {}
         }
     }
 
@@ -129,4 +76,6 @@ Card {
             }
         }
     }
+
+    signal signInSuccessful
 }
