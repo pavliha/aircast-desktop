@@ -8,28 +8,28 @@ Page {
     signal signInSuccessful
 
     background: Rectangle {
+        // For a solid dark background:
         color: Theme.background
 
-        // Gradient overlay using Qt6 native gradient
         gradient: Gradient {
             orientation: Gradient.Vertical
             GradientStop {
                 position: 0.0
-                color: Theme.primary
+                color: "#121212"
             }
             GradientStop {
                 position: 1.0
-                color: Theme.background
+                color: "#0D0D0D"
             }
         }
     }
 
     ColumnLayout {
         anchors.centerIn: parent
-        width: Math.min(parent.width - 32, 480) // px-4 with max-w-md
+        width: Math.min(parent.width - 32, 480)
         spacing: 0
 
-        // Brand Section
+        // Brand Section (still visible, but with dark text)
         ColumnLayout {
             Layout.fillWidth: true
             spacing: 8
@@ -38,18 +38,9 @@ Page {
                 Layout.fillWidth: true
                 text: "Welcome to AirCast"
                 color: Theme.foreground
-                font.pixelSize: 36 // text-4xl
+                font.pixelSize: 36
                 font.weight: Font.Bold
                 horizontalAlignment: Text.AlignHCenter
-
-                // Animation for scale
-                scale: 1
-                Behavior on scale {
-                    NumberAnimation {
-                        duration: 200
-                    }
-                }
-                Component.onCompleted: scale = 1
             }
 
             Text {
@@ -66,10 +57,16 @@ Page {
             Layout.fillWidth: true
             Layout.topMargin: 32
 
+            // Use dark card color and white text
+            color: Theme.card
+            // If your custom Card component uses Theme.card internally,
+            // that is enough. But ensure it references a dark color.
+
             header: CardHeader {
-                // text: "Sign in"
-                // horizontalAlignment: Text.AlignHCenter
-                CardTitle {}
+                CardTitle {
+                    text: "Sign in"
+                    horizontalAlignment: Text.AlignHCenter
+                }
                 CardDescription {
                     text: "Choose your preferred sign in method"
                     horizontalAlignment: Text.AlignHCenter
@@ -83,7 +80,7 @@ Page {
 
                     // Google Sign In Button
                     Button {
-                        id: googleButton  // add an id so we can refer to its properties
+                        id: googleButton
                         Layout.fillWidth: true
                         variant: "outline"
                         size: "lg"
@@ -106,7 +103,6 @@ Page {
                                     id: arrowIcon
                                     source: "qrc:/myproject/assets/icons/arrow-right.svg"
                                     sourceSize: Qt.size(16, 16)
-                                    // Use the button’s hovered property
                                     opacity: googleButton.hovered ? 1 : 0
                                     x: googleButton.hovered ? 0 : -8
 
@@ -128,39 +124,12 @@ Page {
                     }
 
                     // Protected Text with Separator
-                    Item {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 40
-
-                        Rectangle {
-                            anchors.centerIn: parent
-                            width: parent.width
-                            height: 1
-                            color: Theme.border
-                        }
-
-                        Rectangle {
-                            anchors.centerIn: parent
-                            width: protectedText.width + 16
-                            height: protectedText.height
-                            color: Theme.card
-                        }
-
-                        Text {
-                            id: protectedText
-                            anchors.centerIn: parent
-                            text: "PROTECTED BY AIRCAST"
-                            color: Theme.mutedForeground
-                            font.pixelSize: 12
-                            font.weight: Font.Medium
-                        }
-                    }
+                    ProtectedByAirCast {}
                 }
             }
 
             footer: CardFooter {
                 ColumnLayout {
-                    // Child items will be assigned to the CardFooter’s default "content" property
                     width: parent.width
                     spacing: 16
 

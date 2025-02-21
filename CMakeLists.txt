@@ -84,7 +84,8 @@ set(MYPROJECT_QML_FILES
     qml/EmptyState.qml
     qml/DeviceDelegate.qml
     qml/MainPage.qml
-    qml/SignInPage.qml
+    qml/SignInPage/SignInPage.qml
+    qml/SignInPage/ProtectedByAirCast.qml
     qml/LinkText.qml
     qml/Separator.qml
 
