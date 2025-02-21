@@ -67,10 +67,14 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::QuickControls2
 )
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-    QT_QML_DEBUG
-    QML_IMPORT_PATH="${CMAKE_BINARY_DIR}"
-)
+# Remove the hardcoded QML_IMPORT_PATH definition to avoid issues
+target_compile_definitions(${PROJECT_NAME} PRIVATE QT_QML_DEBUG)
+
+# -----------------------------------------------------------------------------
+# Retrieve Qt QML import directories automatically
+# -----------------------------------------------------------------------------
+get_target_property(QtQmlImportDirs Qt6::Qml IMPORT_DIRS)
+message(STATUS "Qt QML import dirs: ${QtQmlImportDirs}")
 
 # -----------------------------------------------------------------------------
 # Define QML files for the project
@@ -92,10 +96,8 @@ set(MYPROJECT_QML_FILES
     qml/SignInPage/SignInWithGoogleButton.qml
     qml/LinkText.qml
     qml/Separator.qml
-
     # UI Components
     qml/ui/Button.qml
-
     # Card Components
     qml/ui/card/Card.qml
     qml/ui/card/CardContent.qml
@@ -105,20 +107,18 @@ set(MYPROJECT_QML_FILES
     qml/ui/card/CardTitle.qml
 )
 
-
 # Define singleton QML files separately
 set(MYPROJECT_QML_SINGLETON_FILES
     qml/ui/Theme.qml
 )
-
-# Set the singleton property for Theme.qml
 set_source_files_properties(${MYPROJECT_QML_SINGLETON_FILES} 
     PROPERTIES 
     QT_QML_SINGLETON_TYPE TRUE
 )
 
-
+# -----------------------------------------------------------------------------
 # Enable the generation of the QMLLS config file
+# -----------------------------------------------------------------------------
 set(QT_QML_GENERATE_QMLLS_INI ON)
 
 # -----------------------------------------------------------------------------
@@ -140,5 +140,4 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/icons/google.svg
         assets/icons/arrow-right.svg
 )
-
 
