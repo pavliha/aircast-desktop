@@ -67,11 +67,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::QuickControls2
 )
 
-# Remove the hardcoded QML_IMPORT_PATH definition to avoid issues
 target_compile_definitions(${PROJECT_NAME} PRIVATE QT_QML_DEBUG)
 
 # -----------------------------------------------------------------------------
-# Retrieve Qt QML import directories automatically
+# Retrieve Qt QML import directories automatically (if available)
 # -----------------------------------------------------------------------------
 get_target_property(QtQmlImportDirs Qt6::Qml IMPORT_DIRS)
 message(STATUS "Qt QML import dirs: ${QtQmlImportDirs}")
@@ -123,6 +122,10 @@ set(QT_QML_GENERATE_QMLLS_INI ON)
 
 # -----------------------------------------------------------------------------
 # Configure QML module with linting and type checking enabled
+#
+# Note: We remove any IMPORT_PATHS entry that points to the system Qt QML directory.
+# The system Qt QML modules are automatically available at runtime, so they should not
+# be added as resources.
 # -----------------------------------------------------------------------------
 qt_add_qml_module(${PROJECT_NAME}
     URI myproject
@@ -140,4 +143,3 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/icons/google.svg
         assets/icons/arrow-right.svg
 )
-
