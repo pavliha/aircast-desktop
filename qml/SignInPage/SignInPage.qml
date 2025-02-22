@@ -14,28 +14,28 @@ Page {
             orientation: Gradient.Vertical
             GradientStop {
                 position: 0.0
-                color: "#121212"
+                color: Theme.isDark ? Theme.card : Theme.background
             }
             GradientStop {
                 position: 1.0
-                color: "#0D0D0D"
+                color: Theme.background
             }
         }
     }
 
-    // This Rectangle is our main container with a max width of 480
     Rectangle {
         id: container
         anchors.centerIn: parent
         // Enforce a max width of 480 or (parent.width - 32) if screen is small
         width: Math.min(parent.width - 32, 480)
         height: contentLayout.implicitHeight
+        // Use transparent color since we want to see the background gradient
         color: "transparent"
 
         ColumnLayout {
             id: contentLayout
             anchors.centerIn: parent
-            Layout.fillWidth: true
+            width: parent.width
             spacing: 32
 
             BrandSection {

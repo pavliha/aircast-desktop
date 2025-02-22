@@ -9,7 +9,7 @@ ColumnLayout {
     Text {
         Layout.fillWidth: true
         text: "Welcome to AirCast"
-        color: "#FFFFFF"  // Explicit white color
+        color: Theme.foreground
         font {
             pixelSize: 36
             weight: Font.Bold

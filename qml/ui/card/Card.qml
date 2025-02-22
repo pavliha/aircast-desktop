@@ -1,7 +1,6 @@
 // Card.qml
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 import myproject 1.0
 
 Rectangle {
@@ -18,7 +17,7 @@ Rectangle {
 
     // Shadcn styling using Theme colors
     color: Theme.card
-    border.color: Theme.withAlpha(Theme.border, 0.1)
+    border.color: Theme.withAlpha(Theme.border, 0.5)
     border.width: 1
     radius: Theme.radius
 

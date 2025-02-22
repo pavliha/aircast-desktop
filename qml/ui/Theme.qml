@@ -1,9 +1,15 @@
 pragma Singleton
 import QtQuick
+import Qt.labs.platform
 
 QtObject {
     // Property to handle dark mode
-    property bool isDark: true  // You can toggle this for dark/light mode
+    readonly property bool isDark: {
+        if (typeof Qt.platform.colorScheme !== "undefined") {
+            return Qt.platform.colorScheme === Qt.Dark;
+        }
+        return false; // Default to light if can't detect
+    }
 
     // Helper function to convert HSL to RGB
     function hslToRgb(h, s, l) {
@@ -42,20 +48,20 @@ QtObject {
     }
 
     // Light theme colors
-    readonly property color _lightBackground: hslToRgb(0, 0, 100)      // --background: 0 0% 100%
-    readonly property color _lightForeground: hslToRgb(222.2, 47.4, 11.2)  // --foreground: 222.2 47.4% 11.2%
-    readonly property color _lightCard: hslToRgb(0, 0, 100)           // --card: 0 0% 100%
+    readonly property color _lightBackground: hslToRgb(0, 0, 100)
+    readonly property color _lightForeground: hslToRgb(222.2, 47.4, 11.2)
+    readonly property color _lightCard: hslToRgb(0, 0, 100)
     readonly property color _lightCardForeground: hslToRgb(222.2, 47.4, 11.2)
-    readonly property color _lightBorder: hslToRgb(214.3, 31.8, 91.4)  // --border: 214.3 31.8% 91.4%
-    readonly property color _lightMutedForeground: hslToRgb(215.4, 16.3, 46.9)  // --muted-foreground
+    readonly property color _lightBorder: hslToRgb(214.3, 31.8, 91.4)
+    readonly property color _lightMutedForeground: hslToRgb(215.4, 16.3, 46.9)
 
     // Dark theme colors
-    readonly property color _darkBackground: hslToRgb(0, 0, 0)        // --background: 0 0% 0%
-    readonly property color _darkForeground: hslToRgb(210, 40, 98)    // --foreground: 210 40% 98%
-    readonly property color _darkCard: hslToRgb(222.2, 84, 4.9)      // --card: 222.2 84% 4.9%
+    readonly property color _darkBackground: hslToRgb(0, 0, 0)
+    readonly property color _darkForeground: hslToRgb(210, 40, 98)
+    readonly property color _darkCard: hslToRgb(222.2, 84, 4.9)
     readonly property color _darkCardForeground: hslToRgb(210, 40, 98)
-    readonly property color _darkBorder: hslToRgb(217.2, 32.6, 17.5)  // --border: 217.2 32.6% 17.5%
-    readonly property color _darkMutedForeground: hslToRgb(215, 20.2, 65.1)  // --muted-foreground
+    readonly property color _darkBorder: hslToRgb(217.2, 32.6, 17.5)
+    readonly property color _darkMutedForeground: hslToRgb(215, 20.2, 65.1)
 
     // Dynamic colors based on theme
     readonly property color background: isDark ? _darkBackground : _lightBackground
@@ -75,24 +81,33 @@ QtObject {
     readonly property color secondary: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(210, 40, 96.1)
     readonly property color secondaryForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2)
     readonly property color ring: isDark ? hslToRgb(212.7, 26.8, 83.9) : hslToRgb(222.2, 84, 4.9)
+    readonly property color input: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(214.3, 31.8, 91.4)
 
     // Border radius matching Tailwind config
     readonly property real radius: 8  // --radius: 0.5rem
 
-    // Original withAlpha function remains the same
-    function withAlpha(col, alpha) {
-        if (typeof col === 'object') {
-            return Qt.rgba(col.r, col.g, col.b, alpha);
+    // Improved withAlpha function that properly handles QColor objects
+    function withAlpha(color, alpha) {
+        if (!color)
+            return Qt.rgba(0, 0, 0, alpha);
+
+        if (color === "transparent")
+            return color;
+
+        // Handle QColor objects
+        if (color.r !== undefined && color.g !== undefined && color.b !== undefined) {
+            return Qt.rgba(color.r, color.g, color.b, alpha);
         }
 
-        if (typeof col === 'string' && col.startsWith('#')) {
-            var r = parseInt(col.substring(1, 3), 16) / 255;
-            var g = parseInt(col.substring(3, 5), 16) / 255;
-            var b = parseInt(col.substring(5, 7), 16) / 255;
+        // Handle hex string colors
+        if (typeof color === 'string' && color.startsWith('#')) {
+            const r = parseInt(color.substr(1, 2), 16) / 255;
+            const g = parseInt(color.substr(3, 2), 16) / 255;
+            const b = parseInt(color.substr(5, 2), 16) / 255;
             return Qt.rgba(r, g, b, alpha);
         }
 
-        console.warn("Invalid color format:", col);
-        return Qt.rgba(0, 0, 0, alpha);
+        // If we can't process the color, return it unchanged
+        return color;
     }
 }

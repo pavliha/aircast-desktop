@@ -18,7 +18,7 @@ Item {
             verticalCenter: parent.verticalCenter
         }
         height: 1
-        color: Theme.withAlpha(Theme.border, 0.2)  // Subtle line color
+        color: Theme.withAlpha(Theme.border, 0.5)  // Subtle line color
     }
 
     // Background pill for text

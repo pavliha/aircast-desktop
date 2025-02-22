@@ -1,6 +1,5 @@
 // Button.qml
 import QtQuick
-import QtQuick.Controls.Basic
 import myproject 1.0
 
 Rectangle {
@@ -24,25 +23,22 @@ Rectangle {
                 height: 36,
                 padding: 16,
                 fontSize: 14
-            } // h-9 px-4
-            ,
+            },
             "sm": {
                 height: 32,
                 padding: 12,
                 fontSize: 12
-            } // h-8 px-3 text-xs
-            ,
+            },
             "lg": {
                 height: 40,
                 padding: 32,
                 fontSize: 14
-            } // h-10 px-8
-            ,
+            },
             "icon": {
                 height: 36,
                 width: 36,
                 padding: 8
-            }          // size-9
+            }
         })
 
     // Variant configurations
@@ -50,12 +46,12 @@ Rectangle {
             "default": {
                 background: Theme.primary,
                 textColor: Theme.primaryForeground,
-                hoverBackground: Theme.withAlpha(Theme.primary, 0.9)
+                hoverBackground: Theme.primary
             },
             "destructive": {
                 background: Theme.destructive,
                 textColor: Theme.destructiveForeground,
-                hoverBackground: Theme.withAlpha(Theme.destructive, 0.9)
+                hoverBackground: Theme.destructive
             },
             "outline": {
                 background: Theme.background,
@@ -67,7 +63,7 @@ Rectangle {
             "secondary": {
                 background: Theme.secondary,
                 textColor: Theme.secondaryForeground,
-                hoverBackground: Theme.withAlpha(Theme.secondary, 0.8)
+                hoverBackground: Theme.secondary
             },
             "ghost": {
                 background: "transparent",
@@ -90,11 +86,18 @@ Rectangle {
 
     // Dynamic properties based on variant and state
     color: {
-        if (disabled)
-            return Qt.rgba(variantConfigs[variant].background.r, variantConfigs[variant].background.g, variantConfigs[variant].background.b, 0.5);
-        if (hovered)
-            return variantConfigs[variant].hoverBackground || variantConfigs[variant].background;
-        return variantConfigs[variant].background;
+        let baseColor = variantConfigs[variant].background;
+        if (baseColor === "transparent")
+            return baseColor;
+
+        if (disabled) {
+            return Theme.withAlpha(baseColor, 0.5);
+        }
+        if (hovered) {
+            let hoverColor = variantConfigs[variant].hoverBackground;
+            return Theme.withAlpha(hoverColor, 0.9);
+        }
+        return baseColor;
     }
 
     border.width: variant === "outline" ? 1 : 0
@@ -127,11 +130,14 @@ Rectangle {
             font.pixelSize: sizeConfigs[root.size].fontSize
             font.weight: Font.Medium
             color: {
-                if (root.disabled)
-                    return Theme.withAlpha(variantConfigs[root.variant].textColor, 0.5);
-                if (root.hovered && variantConfigs[root.variant].hoverTextColor)
+                let textColor = variantConfigs[root.variant].textColor;
+                if (root.disabled) {
+                    return Theme.withAlpha(textColor, 0.5);
+                }
+                if (root.hovered && variantConfigs[root.variant].hoverTextColor) {
                     return variantConfigs[root.variant].hoverTextColor;
-                return variantConfigs[root.variant].textColor;
+                }
+                return textColor;
             }
             textFormat: Text.RichText
             horizontalAlignment: Text.AlignHCenter

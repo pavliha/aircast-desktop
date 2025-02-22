@@ -1,8 +1,9 @@
 import QtQuick
+import myproject 1.0
 
 Text {
     id: root
-    color: mouseArea.containsMouse ? "#94A3B8" : "#FFFFFF"
+    color: mouseArea.containsMouse ? Theme.mutedForeground : Theme.foreground
     font.pixelSize: 12
     font.underline: true
 
