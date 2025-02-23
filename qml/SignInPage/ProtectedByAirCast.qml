@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
-import myproject 1.0
+import AircastDesktop 1.0
 
 Item {
     id: root

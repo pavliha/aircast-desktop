@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(myproject VERSION 1.0.0 LANGUAGES CXX)
+project(AircastDesktop VERSION 1.0.0 LANGUAGES CXX)
 
 # -----------------------------------------------------------------------------
 # Set C++ standard and enable compile commands export for tooling support
@@ -129,7 +129,7 @@ set(QT_QML_GENERATE_QMLLS_INI ON)
 # be added as resources.
 # -----------------------------------------------------------------------------
 qt_add_qml_module(${PROJECT_NAME}
-    URI myproject
+    URI AircastDesktop
     VERSION 1.0
     RESOURCE_PREFIX "/"
     QML_FILES 

@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Window
 import QtQuick.Controls
-import myproject 1.0
+import AircastDesktop 1.0
 
 ApplicationWindow {
     id: window

@@ -1,6 +1,6 @@
 // CardTitle
 import QtQuick 2.15
-import myproject 1.0
+import AircastDesktop 1.0
 
 Text {
     id: root

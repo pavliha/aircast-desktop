@@ -1,6 +1,6 @@
 // Button.qml
 import QtQuick
-import myproject 1.0
+import AircastDesktop 1.0
 
 Rectangle {
     id: root

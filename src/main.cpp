@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
   QGuiApplication app(argc, argv);
 
   ThemeChecker themeChecker;
-  qmlRegisterSingletonInstance("MyProject", 1, 0, "ThemeChecker",
+  qmlRegisterSingletonInstance("AircastDesktop", 1, 0, "ThemeChecker",
                                &themeChecker);
 
   QQmlApplicationEngine engine;
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
   engine.addImportPath("qrc:///");
   engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
 
-  const QUrl url(QStringLiteral("qrc:/myproject/qml/main.qml"));
+  const QUrl url(QStringLiteral("qrc:/AircastDesktop/qml/main.qml"));
   engine.load(url);
 
   if (engine.rootObjects().isEmpty()) {

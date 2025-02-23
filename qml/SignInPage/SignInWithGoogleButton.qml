@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import myproject 1.0
+import AircastDesktop 1.0
 
 Button {
     id: googleButton
@@ -17,7 +17,7 @@ Button {
         }
 
         Image {
-            source: "qrc:/myproject/assets/icons/google.svg"
+            source: "qrc:/AircastDesktop/assets/icons/google.svg"
             sourceSize: Qt.size(20, 20)
         }
 
@@ -32,7 +32,7 @@ Button {
 
         Image {
             id: arrowIcon
-            source: "qrc:/myproject/assets/icons/arrow-right.svg"
+            source: "qrc:/AircastDesktop/assets/icons/arrow-right.svg"
             sourceSize: Qt.size(16, 16)
             opacity: googleButton.hovered ? 1 : 0
             Layout.preferredWidth: 16

@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
-import myproject 1.0
+import AircastDesktop 1.0
 
 Card {
     CardHeader {

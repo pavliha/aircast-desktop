@@ -1,6 +1,6 @@
 pragma Singleton
 import QtQuick 2.15
-import MyProject 1.0
+import AircastDesktop 1.0
 
 QtObject {
     // Use the darkMode property from the C++ ThemeChecker singleton.
