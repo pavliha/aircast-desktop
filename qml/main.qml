@@ -9,7 +9,7 @@ ApplicationWindow {
     height: 800
     visible: true
     title: "AirCast"
-    color: "#000000"
+    color: Theme.background
 
     StackView {
         id: stackView

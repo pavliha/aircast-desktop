@@ -1,20 +1,22 @@
+// TitleSection
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import AircastDesktop 1.0
 
 ColumnLayout {
-  spacing: 8
+    spacing: Theme.spacing.xs
 
-  Label {
-    text: "Devices"
-    color: "white"
-    font.pixelSize: 24
-    font.weight: Font.Medium
-  }
+    Label {
+        text: "Devices"
+        color: Theme.foreground
+        font.pixelSize: 24
+        font.weight: Font.Medium
+    }
 
-  Label {
-    text: "Manage and connect to your AirCast devices"
-    color: "#888888"
-    font.pixelSize: 14
-  }
+    Label {
+        text: "Manage and connect to your AirCast devices"
+        color: Theme.mutedForeground
+        font.pixelSize: 14
+    }
 }

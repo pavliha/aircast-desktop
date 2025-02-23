@@ -2,18 +2,21 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+// import AircastDesktop 1.0
+
 ToolBar {
     background: Rectangle {
-        color: "#000000"
+        color: Theme.background
     }
+
     RowLayout {
         anchors.fill: parent
-        anchors.leftMargin: 20
-        anchors.rightMargin: 20
+        anchors.leftMargin: Theme.spacing.lg
+        anchors.rightMargin: Theme.spacing.lg
 
         Label {
             text: "AirCast"
-            color: "white"
+            color: Theme.foreground
             font.pixelSize: 18
             font.weight: Font.Medium
         }
@@ -32,12 +35,13 @@ ToolBar {
 
         Label {
             text: "Pavlo Kostiuk"
-            color: "white"
+            color: Theme.mutedForeground
             font.pixelSize: 14
         }
 
         RoundButton {
             icon.source: "qrc:/AircastDesktop/assets/icons/circle-user.svg"
+            icon.color: Theme.foreground
             flat: true
         }
     }

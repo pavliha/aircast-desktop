@@ -1,17 +1,20 @@
+// InfoBanner
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+// import AircastDesktop 1.0
+
 Rectangle {
     Layout.fillWidth: true
-    height: 60
-    color: "#1a1d21"
-    radius: 6
+    height: Theme.spacing.xxxl - Theme.spacing.sm
+    color: Theme.secondary
+    radius: Theme.radius
 
     RowLayout {
         anchors.fill: parent
-        anchors.margins: 15
-        spacing: 10
+        anchors.margins: Theme.spacing.md
+        spacing: Theme.spacing.xs
 
         Image {
             source: "qrc:/AircastDesktop/assets/icons/info.svg"
@@ -21,8 +24,10 @@ Rectangle {
 
         Label {
             text: "Connect to your devices to start streaming or click the settings icon to configure them."
-            color: "white"
+            color: Theme.secondaryForeground
             font.pixelSize: 14
+            wrapMode: Text.WordWrap
+            Layout.fillWidth: true
         }
     }
 }

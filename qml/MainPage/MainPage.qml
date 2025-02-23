@@ -1,25 +1,27 @@
+// MainPage
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import AircastDesktop 1.0
 
 Page {
-  header: Header {}
+    header: Header {}
 
-  background: Rectangle {
-    color: "#000000"
-  }
-
-  ColumnLayout {
-    anchors.fill: parent
-    anchors.margins: 20
-    spacing: 20
-
-    TitleSection {}
-    InfoBanner {}
-    DeviceList {
-      model: deviceManager.devices
+    background: Rectangle {
+        color: Theme.background
     }
-  }
 
-  Component.onCompleted: deviceManager.fetchDevices()
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: Theme.spacing.lg
+        spacing: Theme.spacing.lg
+
+        TitleSection {}
+        InfoBanner {}
+        DeviceList {
+            model: deviceManager.devices
+        }
+    }
+
+    Component.onCompleted: deviceManager.fetchDevices()
 }
