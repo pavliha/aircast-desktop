@@ -1,30 +1,19 @@
-import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
+// CardHeader.qml
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
 
 Rectangle {
-    id: root
+    id: headerRoot
     color: "transparent"
-    implicitHeight: headerLayout.implicitHeight
 
-    property alias title: titleLoader.sourceComponent
-    property alias description: descriptionLoader.sourceComponent
+    Layout.fillWidth: true
+    Layout.preferredHeight: headerLayout.implicitHeight
+
+    default property alias content: headerLayout.children
 
     ColumnLayout {
         id: headerLayout
         anchors.fill: parent
-        spacing: 6  // space-y-1.5
-
-        Loader {
-            id: titleLoader
-            Layout.fillWidth: true
-            visible: sourceComponent !== null
-        }
-
-        Loader {
-            id: descriptionLoader
-            Layout.fillWidth: true
-            visible: sourceComponent !== null
-        }
+        spacing: 6
     }
 }

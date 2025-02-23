@@ -23,33 +23,22 @@ Page {
         }
     }
 
-    Rectangle {
-        id: container
-        anchors.centerIn: parent
-        // Enforce a max width of 480 or (parent.width - 32) if screen is small
-        width: Math.min(parent.width - 32, 480)
-        height: contentLayout.implicitHeight
-        // Use transparent color since we want to see the background gradient
-        color: "transparent"
+    ColumnLayout {
+        id: contentLayout
+        width: Math.min(parent.width - Theme.spacing.lg, 480)
+        spacing: 48
 
-        ColumnLayout {
-            id: contentLayout
-            anchors.centerIn: parent
-            width: parent.width
-            spacing: 32
+        BrandSection {
+            Layout.fillWidth: true
+        }
 
-            BrandSection {
-                Layout.fillWidth: true
-            }
+        SignInCard {
+            Layout.fillWidth: true
+            onSignInSuccessful: root.signInSuccessful()
+        }
 
-            SignInCard {
-                Layout.fillWidth: true
-                onSignInSuccessful: root.signInSuccessful()
-            }
-
-            SupportSection {
-                Layout.fillWidth: true
-            }
+        SupportSection {
+            Layout.fillWidth: true
         }
     }
 }

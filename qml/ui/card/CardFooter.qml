@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.15
 Rectangle {
     id: root
     color: "transparent"
+    Layout.fillWidth: true
+    implicitHeight: footerLayout.implicitHeight
 
     ColumnLayout {
         id: footerLayout

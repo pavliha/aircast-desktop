@@ -5,7 +5,6 @@ import myproject 1.0
 Item {
     id: root
     Layout.fillWidth: true
-    Layout.preferredHeight: 40
     Layout.topMargin: 16
     Layout.bottomMargin: 16
 

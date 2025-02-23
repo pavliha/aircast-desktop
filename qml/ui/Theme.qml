@@ -1,6 +1,5 @@
 pragma Singleton
 import QtQuick
-import Qt.labs.platform
 
 QtObject {
     // Property to handle dark mode
@@ -82,6 +81,17 @@ QtObject {
     readonly property color secondaryForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2)
     readonly property color ring: isDark ? hslToRgb(212.7, 26.8, 83.9) : hslToRgb(222.2, 84, 4.9)
     readonly property color input: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(214.3, 31.8, 91.4)
+
+    // Spacing matching Shadcn design system
+    readonly property QtObject spacing: QtObject {
+        readonly property int xs: 8    // space-2: 0.5rem
+        readonly property int sm: 12   // space-3: 0.75rem
+        readonly property int md: 16   // space-4: 1rem
+        readonly property int lg: 24   // space-6: 1.5rem
+        readonly property int xl: 32   // space-8: 2rem
+        readonly property int xxl: 48  // space-12: 3rem
+        readonly property int xxxl: 64 // space-16: 4rem
+    }
 
     // Border radius matching Tailwind config
     readonly property real radius: 8  // --radius: 0.5rem
