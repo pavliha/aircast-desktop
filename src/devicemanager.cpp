@@ -1,4 +1,4 @@
-#include "devicemanager.h"
+#include "DeviceManager.h"
 
 DeviceManager::DeviceManager(QObject *parent)
     : QObject(parent), m_manager(new QNetworkAccessManager(this)) {

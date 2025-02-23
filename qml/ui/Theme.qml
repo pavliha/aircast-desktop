@@ -1,23 +1,20 @@
 pragma Singleton
-import QtQuick
+import QtQuick 2.15
+import MyProject 1.0
 
 QtObject {
-    // Property to handle dark mode
-    readonly property bool isDark: {
-        if (typeof Qt.platform.colorScheme !== "undefined") {
-            return Qt.platform.colorScheme === Qt.Dark;
-        }
-        return false; // Default to light if can't detect
-    }
+    // Use the darkMode property from the C++ ThemeChecker singleton.
+    readonly property bool isDark: ThemeChecker.darkMode
+    // A convenience property that returns a string "dark" or "light"
+    readonly property string mode: isDark ? "dark" : "light"
 
-    // Helper function to convert HSL to RGB
+    // Helper function to convert HSL values (0-360, 0-100, 0-100) to an RGBA color.
     function hslToRgb(h, s, l) {
         h = h / 360;
         s = s / 100;
         l = l / 100;
 
         let r, g, b;
-
         if (s === 0) {
             r = g = b = l;
         } else {
@@ -34,15 +31,12 @@ QtObject {
                     return p + (q - p) * (2 / 3 - t) * 6;
                 return p;
             }
-
             const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
             const p = 2 * l - q;
-
             r = hue2rgb(p, q, h + 1 / 3);
             g = hue2rgb(p, q, h);
             b = hue2rgb(p, q, h - 1 / 3);
         }
-
         return Qt.rgba(r, g, b, 1.0);
     }
 
@@ -70,7 +64,7 @@ QtObject {
     readonly property color border: isDark ? _darkBorder : _lightBorder
     readonly property color mutedForeground: isDark ? _darkMutedForeground : _lightMutedForeground
 
-    // Other colors remain similar but using HSL values
+    // Additional colors (adjust HSL values as needed)
     readonly property color primary: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2)
     readonly property color primaryForeground: isDark ? hslToRgb(222.2, 47.4, 11.2) : hslToRgb(210, 40, 98)
     readonly property color destructive: isDark ? hslToRgb(0, 62.8, 30.6) : hslToRgb(0, 100, 50)
@@ -94,22 +88,19 @@ QtObject {
     }
 
     // Border radius matching Tailwind config
-    readonly property real radius: 8  // --radius: 0.5rem
+    readonly property real radius: 8  // 0.5rem
 
-    // Improved withAlpha function that properly handles QColor objects
+    // withAlpha function: returns the given color with the specified alpha value.
     function withAlpha(color, alpha) {
         if (!color)
             return Qt.rgba(0, 0, 0, alpha);
-
         if (color === "transparent")
             return color;
-
-        // Handle QColor objects
+        // If color has r, g, b properties
         if (color.r !== undefined && color.g !== undefined && color.b !== undefined) {
             return Qt.rgba(color.r, color.g, color.b, alpha);
         }
-
-        // Handle hex string colors
+        // Handle hex strings (e.g. "#RRGGBB")
         if (typeof color === 'string' && color.startsWith('#')) {
             const r = parseInt(color.substr(1, 2), 16) / 255;
             const g = parseInt(color.substr(3, 2), 16) / 255;

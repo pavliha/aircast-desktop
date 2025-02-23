@@ -5,10 +5,16 @@
 #include <QQuickStyle>
 #include <QtCore/QtCore>
 
-#include "devicemanager.h"
+#include "DeviceManager.h"
+#include "ThemeChecker.h"
 
 int main(int argc, char *argv[]) {
   QGuiApplication app(argc, argv);
+
+  ThemeChecker themeChecker;
+  qmlRegisterSingletonInstance("MyProject", 1, 0, "ThemeChecker",
+                               &themeChecker);
+
   QQmlApplicationEngine engine;
   QQuickStyle::setStyle("Basic");
 
