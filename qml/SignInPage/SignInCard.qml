@@ -17,9 +17,7 @@ Card {
     }
 
     CardContent {
-
         SignInWithGoogleButton {}
-
         ProtectedByAirCast {}
     }
 

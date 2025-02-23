@@ -25,6 +25,7 @@ Page {
 
     ColumnLayout {
         id: contentLayout
+        anchors.centerIn: parent
         width: Math.min(parent.width - Theme.spacing.lg, 480)
         spacing: 48
 
