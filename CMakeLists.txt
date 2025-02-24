@@ -59,18 +59,18 @@ qt_add_executable(${PROJECT_NAME}
 )
 
 message(STATUS "Current source dir: ${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "Looking for shader in: ${CMAKE_CURRENT_SOURCE_DIR}/shaders/tintedicon.frag")
+message(STATUS "Looking for shader in: ${CMAKE_CURRENT_SOURCE_DIR}/shaders/icon.frag")
 
 
 # -----------------------------------------------------------------------------
 # Use Qt6 shader tools to compile and embed the shader.
 # The shader file is specified with a relative path so that it is exposed with
-# the correct resource URL "qrc:/shaders/tintedicon.frag.qsb"
+# the correct resource URL "qrc:/shaders/icon.frag.qsb"
 # -----------------------------------------------------------------------------
 
-message(STATUS "Shader source path: ${CMAKE_CURRENT_SOURCE_DIR}/shaders/tintedicon.frag")
-file(GLOB SHADER_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/shaders/tintedicon.frag")
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/shaders/tintedicon.frag")
+message(STATUS "Shader source path: ${CMAKE_CURRENT_SOURCE_DIR}/shaders/icon.frag")
+file(GLOB SHADER_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/shaders/icon.frag")
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/shaders/icon.frag")
     message(STATUS "Shader file exists")
 else()
     message(STATUS "Shader file NOT found")
@@ -79,9 +79,9 @@ endif()
 qt6_add_shaders(${PROJECT_NAME} 
     PREFIX "/"
     FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/shaders/tintedicon.frag"
+        "${CMAKE_CURRENT_SOURCE_DIR}/shaders/icon.frag"
     OUTPUTS
-        "shaders/tintedicon.frag.qsb"
+        "shaders/icon.frag.qsb"
     OPTIMIZED
 )
 
@@ -132,7 +132,7 @@ set(MYPROJECT_QML_FILES
     qml/Separator.qml
     # UI Components
     qml/ui/Button.qml
-    qml/ui/TintedIcon.qml
+    qml/ui/Icon.qml
     # Card Components
     qml/ui/card/Card.qml
     qml/ui/card/CardContent.qml

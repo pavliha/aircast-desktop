@@ -11,7 +11,7 @@ Button {
     property string userEmail: "kostyk.pavel.09@gmail.com"
     
     // Padding from application edges
-    property int edgePadding: 16
+    property int edgePadding: 24
 
     variant: "ghost"
 
@@ -25,7 +25,7 @@ Button {
             font.pixelSize: 14
         }
 
-        TintedIcon {
+        Icon {
             source: "qrc:/AircastDesktop/assets/icons/circle-user.svg"
             tintColor: Theme.foreground
             width: 24
@@ -148,30 +148,41 @@ Button {
             }
         }
         
-        // Sign Out action
+        // Fixed Sign Out MenuItem
         MenuItem {
             id: signOutItem
             text: "Sign out"
             height: 50
             
-            contentItem: RowLayout {
-                spacing: 12
+            // Fixed background to ensure proper appearance
+            background: Rectangle {
+                color: signOutItem.highlighted ? Theme.accent : "transparent"
+            }
+            
+            // Completely revised content layout
+            contentItem: Item {
                 anchors.fill: parent
-                anchors.leftMargin: 20
-                anchors.rightMargin: 20
                 
-                TintedIcon {
-                    source: "qrc:/AircastDesktop/assets/icons/log-out.svg"
-                    tintColor: signOutItem.highlighted ? Theme.accentForeground : Theme.foreground
-                    width: 18
-                    height: 18
-                }
-                
-                Label {
-                    text: "Sign out"
-                    color: signOutItem.highlighted ? Theme.accentForeground : Theme.foreground
-                    font.pixelSize: 14
-                    Layout.fillWidth: true
+                RowLayout {
+                    spacing: 12
+                    anchors.fill: parent
+                    anchors.leftMargin: 20
+                    anchors.rightMargin: 20
+                    
+                    Icon {
+                        source: "qrc:/AircastDesktop/assets/icons/log-out.svg"
+                        tintColor: signOutItem.highlighted ? Theme.accentForeground : Theme.foreground
+                        width: 18
+                        height: 18
+                    }
+                    
+                    Label {
+                        text: "Sign out"
+                        color: signOutItem.highlighted ? Theme.accentForeground : Theme.foreground
+                        font.pixelSize: 14
+                        Layout.fillWidth: true
+                        verticalAlignment: Text.AlignVCenter
+                    }
                 }
             }
             

@@ -12,7 +12,7 @@ Item {
         anchors.fill: parent
         property variant src: icon
         property color tintColor: root.tintColor
-        fragmentShader: "qrc:/shaders/tintedicon.frag.qsb"
+        fragmentShader: "qrc:/shaders/icon.frag.qsb"
     }
 
     ShaderEffectSource {

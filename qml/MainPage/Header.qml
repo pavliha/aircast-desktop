@@ -36,7 +36,7 @@ ToolBar {
         Button {
             size: "icon"
             variant: "outline"
-            contentItem: TintedIcon {
+            contentItem: Icon {
                 source: "qrc:/AircastDesktop/assets/icons/theme.svg"
                 tintColor: Theme.foreground
                 width: 20

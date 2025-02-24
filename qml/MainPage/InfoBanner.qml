@@ -17,7 +17,7 @@ Rectangle {
         anchors.margins: Theme.spacing.md
         spacing: Theme.spacing.sm
 
-        TintedIcon {
+        Icon {
             source: "qrc:/AircastDesktop/assets/icons/info.svg"
             tintColor: Theme.foreground
             width: 16

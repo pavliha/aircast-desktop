@@ -28,7 +28,7 @@ Rectangle {
         Button {
             size: "icon"
             variant: "ghost"
-            contentItem: TintedIcon {
+            contentItem: Icon {
                 source: "qrc:/AircastDesktop/assets/icons/settings.svg"
                 tintColor: Theme.foreground
                 width: 16

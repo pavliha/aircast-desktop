@@ -7,7 +7,7 @@ import AircastDesktop 1.0
 ColumnLayout {
     spacing: Theme.spacing.md
 
-    TintedIcon {
+    Icon {
         Layout.alignment: Qt.AlignHCenter
         source: "qrc:/AircastDesktop/assets/icons/plus-circle.svg"
         tintColor: Theme.mutedForeground
