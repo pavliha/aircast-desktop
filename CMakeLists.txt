@@ -31,7 +31,7 @@ if(DEFINED ENV{QTDIR})
 endif()
 
 # -----------------------------------------------------------------------------
-# Find required Qt6 packages
+# Find required Qt6 packages (note: 'ShaderTools' provides shader support)
 # -----------------------------------------------------------------------------
 find_package(Qt6 REQUIRED COMPONENTS 
     Core 
@@ -39,6 +39,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     Quick 
     Qml 
     QuickControls2
+    ShaderTools
 )
 
 # -----------------------------------------------------------------------------
@@ -57,6 +58,36 @@ qt_add_executable(${PROJECT_NAME}
     src/ThemeChecker.h
 )
 
+message(STATUS "Current source dir: ${CMAKE_CURRENT_SOURCE_DIR}")
+message(STATUS "Looking for shader in: ${CMAKE_CURRENT_SOURCE_DIR}/shaders/tintedicon.frag")
+
+
+# -----------------------------------------------------------------------------
+# Use Qt6 shader tools to compile and embed the shader.
+# The shader file is specified with a relative path so that it is exposed with
+# the correct resource URL "qrc:/shaders/tintedicon.frag.qsb"
+# -----------------------------------------------------------------------------
+
+message(STATUS "Shader source path: ${CMAKE_CURRENT_SOURCE_DIR}/shaders/tintedicon.frag")
+file(GLOB SHADER_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/shaders/tintedicon.frag")
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/shaders/tintedicon.frag")
+    message(STATUS "Shader file exists")
+else()
+    message(STATUS "Shader file NOT found")
+endif()
+
+qt6_add_shaders(${PROJECT_NAME} 
+    PREFIX "/"
+    FILES
+        "${CMAKE_CURRENT_SOURCE_DIR}/shaders/tintedicon.frag"
+    OUTPUTS
+        "shaders/tintedicon.frag.qsb"
+    OPTIMIZED
+)
+
+get_target_property(SHADER_FILES ${PROJECT_NAME} QT_SHADER_FILES)
+message(STATUS "Shader files: ${SHADER_FILES}")
+
 # -----------------------------------------------------------------------------
 # Link Qt libraries and set compile definitions
 # -----------------------------------------------------------------------------
@@ -66,8 +97,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Quick
     Qt6::Qml
     Qt6::QuickControls2
+    Qt6::ShaderTools
 )
-
 target_compile_definitions(${PROJECT_NAME} PRIVATE QT_QML_DEBUG)
 
 # -----------------------------------------------------------------------------
@@ -98,6 +129,7 @@ set(MYPROJECT_QML_FILES
     qml/Separator.qml
     # UI Components
     qml/ui/Button.qml
+    qml/ui/TintedIcon.qml
     # Card Components
     qml/ui/card/Card.qml
     qml/ui/card/CardContent.qml
@@ -123,10 +155,6 @@ set(QT_QML_GENERATE_QMLLS_INI ON)
 
 # -----------------------------------------------------------------------------
 # Configure QML module with linting and type checking enabled
-#
-# Note: We remove any IMPORT_PATHS entry that points to the system Qt QML directory.
-# The system Qt QML modules are automatically available at runtime, so they should not
-# be added as resources.
 # -----------------------------------------------------------------------------
 qt_add_qml_module(${PROJECT_NAME}
     URI AircastDesktop
@@ -143,4 +171,5 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/icons/settings.svg
         assets/icons/google.svg
         assets/icons/arrow-right.svg
+    # The shader is embedded by qt6_add_shaders()—no manual addition is needed.
 )
