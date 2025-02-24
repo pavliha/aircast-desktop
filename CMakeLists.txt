@@ -112,13 +112,16 @@ message(STATUS "Qt QML import dirs: ${QtQmlImportDirs}")
 # -----------------------------------------------------------------------------
 set(MYPROJECT_QML_FILES
     qml/main.qml
-    qml/Header.qml
+    # MainPage Components
+    qml/MainPage/Header.qml
     qml/MainPage/TitleSection.qml
     qml/MainPage/InfoBanner.qml
     qml/MainPage/DeviceList.qml
     qml/MainPage/EmptyState.qml
     qml/MainPage/DeviceDelegate.qml
     qml/MainPage/MainPage.qml
+    qml/MainPage/UserMenuDropdown.qml
+    # SignInPage Components
     qml/SignInPage/SignInPage.qml
     qml/SignInPage/ProtectedByAirCast.qml
     qml/SignInPage/SignInCard.qml
@@ -171,5 +174,6 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/icons/settings.svg
         assets/icons/google.svg
         assets/icons/arrow-right.svg
+        assets/icons/log-out.svg
     # The shader is embedded by qt6_add_shaders()—no manual addition is needed.
 )

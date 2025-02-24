@@ -41,40 +41,40 @@ QtObject {
     }
 
     // Light theme colors
-    readonly property color _lightBackground: hslToRgb(0, 0, 100)
-    readonly property color _lightForeground: hslToRgb(222.2, 47.4, 11.2)
-    readonly property color _lightCard: hslToRgb(0, 0, 100)
-    readonly property color _lightCardForeground: hslToRgb(222.2, 47.4, 11.2)
-    readonly property color _lightBorder: hslToRgb(214.3, 31.8, 91.4)
-    readonly property color _lightMutedForeground: hslToRgb(215.4, 16.3, 46.9)
+    readonly property color _lightBackground: hslToRgb(0, 0, 100)         // #FFFFFF
+    readonly property color _lightForeground: hslToRgb(222.2, 47.4, 11.2) // #0F172A
+    readonly property color _lightCard: hslToRgb(0, 0, 100)               // #FFFFFF
+    readonly property color _lightCardForeground: hslToRgb(222.2, 47.4, 11.2) // #0F172A
+    readonly property color _lightBorder: hslToRgb(214.3, 31.8, 91.4)     // #E2E8F0
+    readonly property color _lightMutedForeground: hslToRgb(215.4, 16.3, 46.9) // #64748B
 
     // Dark theme colors
-    readonly property color _darkBackground: hslToRgb(0, 0, 0)
-    readonly property color _darkForeground: hslToRgb(210, 40, 98)
-    readonly property color _darkCard: hslToRgb(222.2, 84, 4.9)
-    readonly property color _darkCardForeground: hslToRgb(210, 40, 98)
-    readonly property color _darkBorder: hslToRgb(217.2, 32.6, 17.5)
-    readonly property color _darkMutedForeground: hslToRgb(215, 20.2, 65.1)
+    readonly property color _darkBackground: hslToRgb(0, 0, 0)            // #000000
+    readonly property color _darkForeground: hslToRgb(210, 40, 98)        // #F8F8F8
+    readonly property color _darkCard: hslToRgb(222.2, 84, 4.9)           // #020817
+    readonly property color _darkCardForeground: hslToRgb(210, 40, 98)    // #F8F8F8
+    readonly property color _darkBorder: hslToRgb(217.2, 32.6, 17.5)      // #1E293B
+    readonly property color _darkMutedForeground: hslToRgb(215, 20.2, 65.1) // #94A3B8
 
     // Dynamic colors based on theme
-    readonly property color background: isDark ? _darkBackground : _lightBackground
-    readonly property color foreground: isDark ? _darkForeground : _lightForeground
-    readonly property color card: isDark ? _darkCard : _lightCard
-    readonly property color cardForeground: isDark ? _darkCardForeground : _lightCardForeground
-    readonly property color border: isDark ? _darkBorder : _lightBorder
-    readonly property color mutedForeground: isDark ? _darkMutedForeground : _lightMutedForeground
+    readonly property color background: isDark ? _darkBackground : _lightBackground         // #000000 or #FFFFFF
+    readonly property color foreground: isDark ? _darkForeground : _lightForeground         // #F8F8F8 or #0F172A
+    readonly property color card: isDark ? _darkCard : _lightCard                           // #020817 or #FFFFFF
+    readonly property color cardForeground: isDark ? _darkCardForeground : _lightCardForeground // #F8F8F8 or #0F172A
+    readonly property color border: isDark ? _darkBorder : _lightBorder                     // #1E293B or #E2E8F0
+    readonly property color mutedForeground: isDark ? _darkMutedForeground : _lightMutedForeground // #94A3B8 or #64748B
 
-    // Additional colors (adjust HSL values as needed)
-    readonly property color primary: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2)
-    readonly property color primaryForeground: isDark ? hslToRgb(222.2, 47.4, 11.2) : hslToRgb(210, 40, 98)
-    readonly property color destructive: isDark ? hslToRgb(0, 62.8, 30.6) : hslToRgb(0, 100, 50)
-    readonly property color destructiveForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(210, 40, 98)
-    readonly property color accent: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(210, 40, 96.1)
-    readonly property color accentForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2)
-    readonly property color secondary: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(210, 40, 96.1)
-    readonly property color secondaryForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2)
-    readonly property color ring: isDark ? hslToRgb(212.7, 26.8, 83.9) : hslToRgb(222.2, 84, 4.9)
-    readonly property color input: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(214.3, 31.8, 91.4)
+    // Additional colors
+    readonly property color primary: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2) // #F8F8F8 or #0F172A
+    readonly property color primaryForeground: isDark ? hslToRgb(222.2, 47.4, 11.2) : hslToRgb(210, 40, 98) // #0F172A or #F8F8F8
+    readonly property color destructive: isDark ? hslToRgb(0, 62.8, 30.6) : hslToRgb(0, 100, 50) // #9D0000 or #FF0000
+    readonly property color destructiveForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(210, 40, 98) // #F8F8F8 or #F8F8F8
+    readonly property color accent: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(210, 40, 96.1) // #1E293B or #F5F5F7
+    readonly property color accentForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2) // #F8F8F8 or #0F172A
+    readonly property color secondary: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(210, 40, 96.1) // #1E293B or #F5F5F7
+    readonly property color secondaryForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2) // #F8F8F8 or #0F172A
+    readonly property color ring: isDark ? hslToRgb(212.7, 26.8, 83.9) : hslToRgb(222.2, 84, 4.9) // #D1D6E0 or #020817
+    readonly property color input: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(214.3, 31.8, 91.4) // #1E293B or #E2E8F0
 
     // Spacing matching Shadcn design system
     readonly property QtObject spacing: QtObject {
@@ -111,4 +111,7 @@ QtObject {
         // If we can't process the color, return it unchanged
         return color;
     }
+
+    readonly property color popupBackground: card  // Same as card: #020817 (dark) or #FFFFFF (light)
+    readonly property color shadow: isDark ? Qt.rgba(0, 0, 0, 0.5) : Qt.rgba(0, 0, 0, 0.1) // rgba(0,0,0,0.5) or rgba(0,0,0,0.1)
 }

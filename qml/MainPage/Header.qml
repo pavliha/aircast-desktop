@@ -6,14 +6,14 @@ import AircastDesktop 1.0
 ToolBar {
     id: header
     height: 64
-    width: parent.width  // Make ToolBar take full width
+    width: parent.width
 
     background: Rectangle {
         color: Theme.background
     }
 
     RowLayout {
-        anchors.fill: parent  // This ensures the RowLayout fills the ToolBar
+        anchors.fill: parent
         anchors.leftMargin: Theme.spacing.lg
         anchors.rightMargin: Theme.spacing.lg
         spacing: Theme.spacing.md
@@ -44,22 +44,8 @@ ToolBar {
             }
         }
 
-        Label {
-            text: "Pavlo Kostiuk"
-            color: Theme.foreground
-            font.weight: Font.Medium
-            font.pixelSize: 14
-        }
-
-        Button {
-            size: "icon"
-            variant: "ghost"
-            contentItem: TintedIcon {
-                source: "qrc:/AircastDesktop/assets/icons/circle-user.svg"
-                tintColor: Theme.foreground
-                width: 24
-                height: 24
-            }
+        UserMenuDropdown {
+            Layout.alignment: Qt.AlignVCenter
         }
     }
 }
