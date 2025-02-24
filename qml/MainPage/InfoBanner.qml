@@ -9,7 +9,7 @@ Rectangle {
     color: Theme.secondary
     radius: Theme.radius
     border.width: 1
-    border.color: Theme.border  // Adding border
+    border.color: Theme.border
 
     RowLayout {
         anchors.fill: parent

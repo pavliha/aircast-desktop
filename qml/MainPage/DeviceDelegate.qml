@@ -1,23 +1,24 @@
-// DeviceDelegate
-import QtQuick 2.15
-import QtQuick.Controls 6.5
+import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
+import AircastDesktop 1.0
 
 Rectangle {
     width: ListView.view.width
-    height: 70
-    color: "#1a1d21"
-    radius: 4
+    height: Theme.spacing.xxxl + Theme.spacing.xs // 72px
+    color: Theme.secondary
+    radius: Theme.radius
 
     RowLayout {
         anchors.fill: parent
-        anchors.margins: 15
-        spacing: 15
+        anchors.margins: Theme.spacing.md
+        spacing: Theme.spacing.md
 
         Label {
             text: modelData.name || "Unnamed Device"
-            color: "white"
+            color: Theme.foreground
             font.pixelSize: 14
+            font.weight: Font.Medium
         }
 
         Item {
@@ -25,11 +26,14 @@ Rectangle {
         }
 
         Button {
-            text: "Settings"
-            icon.source: "qrc:/assets/icons/settings.svg"
-            onClicked:
-            // TODO: Implement settings functionality
-            {}
+            size: "icon"
+            variant: "ghost"
+            contentItem: TintedIcon {
+                source: "qrc:/AircastDesktop/assets/icons/settings.svg"
+                tintColor: Theme.foreground
+                width: 16
+                height: 16
+            }
         }
     }
 }
