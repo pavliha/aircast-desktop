@@ -11,26 +11,6 @@ Item {
     width: iconWidth
     height: iconHeight
 
-    // Log color when it changes
-    onColorChanged: {
-        console.log("Icon color changed to:", color)
-        logColor(color)
-    }
-
-    // Log initial color when component completes
-    Component.onCompleted: {
-        console.log("Icon initial color:", color)
-        logColor(color)
-    }
-
-    // Function to log color in a more detailed format
-    function logColor(colorValue) {
-        console.log("Color RGB values - R:", colorValue.r.toFixed(2), 
-                                     "G:", colorValue.g.toFixed(2), 
-                                     "B:", colorValue.b.toFixed(2), 
-                                     "A:", colorValue.a.toFixed(2))
-    }
-
     Image {
         id: sourceImage
         anchors.fill: parent
