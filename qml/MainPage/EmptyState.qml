@@ -10,7 +10,7 @@ ColumnLayout {
     Icon {
         Layout.alignment: Qt.AlignHCenter
         source: "qrc:/AircastDesktop/assets/icons/plus-circle.svg"
-        tintColor: Theme.mutedForeground
+        color: Theme.mutedForeground
         width: 48
         height: 48
     }

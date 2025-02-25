@@ -30,7 +30,7 @@ Rectangle {
             variant: "ghost"
             contentItem: Icon {
                 source: "qrc:/AircastDesktop/assets/icons/settings.svg"
-                tintColor: Theme.foreground
+                color: Theme.foreground
                 width: 16
                 height: 16
             }

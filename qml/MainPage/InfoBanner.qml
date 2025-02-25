@@ -19,7 +19,7 @@ Rectangle {
 
         Icon {
             source: "qrc:/AircastDesktop/assets/icons/info.svg"
-            tintColor: Theme.foreground
+            color: Theme.foreground
             width: 16
             height: 16
             Layout.alignment: Qt.AlignTop

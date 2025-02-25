@@ -27,7 +27,7 @@ Button {
 
         Icon {
             source: "qrc:/AircastDesktop/assets/icons/circle-user.svg"
-            tintColor: Theme.foreground
+            color: Theme.foreground
             width: 24
             height: 24
         }
@@ -49,6 +49,45 @@ Button {
             
             background: Rectangle {
                 color: menuItem.highlighted ? Theme.accent : "transparent"
+                
+                // Apply radius only for first and last items to preserve rounded corners
+                radius: {
+                    if (index === 0) return 8;
+                    if (index === menu.count - 1) return 8;
+                    return 0;
+                }
+                
+                // Special clipping for first item (top corners only)
+                Rectangle {
+                    visible: index === 0 && menuItem.highlighted
+                    anchors.fill: parent
+                    color: Theme.accent
+                    radius: 8
+                    // Clip bottom part to remove bottom radius
+                    clip: true
+                    Rectangle {
+                        width: parent.width
+                        height: parent.height + 8
+                        anchors.top: parent.top
+                        color: Theme.accent
+                    }
+                }
+                
+                // Special clipping for last item (bottom corners only)
+                Rectangle {
+                    visible: index === menu.count - 1 && menuItem.highlighted
+                    anchors.fill: parent
+                    color: Theme.accent
+                    radius: 8
+                    // Clip top part to remove top radius
+                    clip: true
+                    Rectangle {
+                        width: parent.width
+                        height: parent.height + 8
+                        anchors.bottom: parent.bottom
+                        color: Theme.accent
+                    }
+                }
             }
             
             contentItem: Label {
@@ -70,6 +109,7 @@ Button {
                 radius: 8
                 border.width: 1
                 border.color: Theme.border
+                clip: true // Add simple clipping to respect the rounded corners
             }
             
             // Create shadow effect with layered rectangles
@@ -94,7 +134,19 @@ Button {
             height: 90
             
             background: Rectangle {
-                color: "transparent"
+                color: profileSection.highlighted ? Theme.accent : "transparent"
+                // Apply rounded corners only at the top
+                radius: 8
+                clip: true
+                
+                // Block out bottom corners with a solid rectangle 
+                Rectangle {
+                    visible: profileSection.highlighted
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                    height: 8
+                    color: Theme.accent
+                }
             }
             
             contentItem: RowLayout {
@@ -126,14 +178,16 @@ Button {
                     
                     Label {
                         text: userName
-                        color: Theme.foreground
+                        color: profileSection.highlighted ? Theme.accentForeground : Theme.foreground
                         font.pixelSize: 14
                         font.weight: Font.Medium
                     }
                     
                     Label {
                         text: userEmail
-                        color: Theme.mutedForeground
+                        color: profileSection.highlighted ? 
+                               Qt.rgba(Theme.accentForeground.r, Theme.accentForeground.g, Theme.accentForeground.b, 0.8) : 
+                               Theme.mutedForeground
                         font.pixelSize: 14
                     }
                 }
@@ -154,9 +208,20 @@ Button {
             text: "Sign out"
             height: 50
             
-            // Fixed background to ensure proper appearance
             background: Rectangle {
                 color: signOutItem.highlighted ? Theme.accent : "transparent"
+                // Apply rounded corners only at the bottom
+                radius: 8
+                clip: true
+                
+                // Block out top corners with a solid rectangle
+                Rectangle {
+                    visible: signOutItem.highlighted
+                    anchors.top: parent.top
+                    width: parent.width
+                    height: 8
+                    color: Theme.accent
+                }
             }
             
             // Completely revised content layout
@@ -171,7 +236,7 @@ Button {
                     
                     Icon {
                         source: "qrc:/AircastDesktop/assets/icons/log-out.svg"
-                        tintColor: signOutItem.highlighted ? Theme.accentForeground : Theme.foreground
+                        color: signOutItem.highlighted ? Theme.accentForeground : Theme.foreground
                         width: 18
                         height: 18
                     }
