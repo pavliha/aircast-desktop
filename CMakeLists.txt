@@ -133,6 +133,12 @@ set(MYPROJECT_QML_FILES
     # UI Components
     qml/ui/Button.qml
     qml/ui/Icon.qml
+    # Menu Components
+    qml/ui/menu/Menu.qml
+    qml/ui/menu/MenuButton.qml
+    qml/ui/menu/MenuItem.qml
+    qml/ui/menu/MenuProfile.qml
+    qml/ui/menu/MenuSeparator.qml
     # Card Components
     qml/ui/card/Card.qml
     qml/ui/card/CardContent.qml

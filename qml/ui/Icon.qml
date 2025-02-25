@@ -29,10 +29,14 @@ Item {
     }
 
     ShaderEffect {
+        id: shaderEffect
         anchors.fill: parent
         property variant src: icon
         property color tintColor: root.color
         fragmentShader: "qrc:/shaders/icon.frag.qsb"
+        
+        // Add transparency handling
+        blending: true
     }
 
     ShaderEffectSource {
@@ -42,7 +46,13 @@ Item {
             anchors.fill: parent
             source: root.source
             fillMode: Image.PreserveAspectFit
+            sourceSize.width: parent.width * 2 // Higher resolution for better quality
+            sourceSize.height: parent.height * 2
+            smooth: true
+            mipmap: true // Enable mipmapping for better scaling quality
         }
         smooth: true
+        hideSource: true // Hide the original image
+        live: true // Keep updating if the source changes
     }
 }
