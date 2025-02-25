@@ -1,12 +1,15 @@
-import QtQuick 2.15
+import QtQuick
+import Qt5Compat.GraphicalEffects
 
 Item {
     id: root
     property url source: ""
     property color color: Theme.foreground
+    property int iconWidth: 24
+    property int iconHeight: 24
 
-    width: icon.width
-    height: icon.height
+    width: iconWidth
+    height: iconHeight
 
     // Log color when it changes
     onColorChanged: {
@@ -28,31 +31,22 @@ Item {
                                      "A:", colorValue.a.toFixed(2))
     }
 
-    ShaderEffect {
-        id: shaderEffect
+    Image {
+        id: sourceImage
         anchors.fill: parent
-        property variant src: icon
-        property color tintColor: root.color
-        fragmentShader: "qrc:/shaders/icon.frag.qsb"
-        
-        // Add transparency handling
-        blending: true
+        source: root.source
+        fillMode: Image.PreserveAspectFit
+        sourceSize.width: root.width * 2
+        sourceSize.height: root.height * 2
+        smooth: true
+        mipmap: true
+        visible: false
     }
 
-    ShaderEffectSource {
-        id: icon
-        anchors.fill: parent
-        sourceItem: Image {
-            anchors.fill: parent
-            source: root.source
-            fillMode: Image.PreserveAspectFit
-            sourceSize.width: parent.width * 2 // Higher resolution for better quality
-            sourceSize.height: parent.height * 2
-            smooth: true
-            mipmap: true // Enable mipmapping for better scaling quality
-        }
-        smooth: true
-        hideSource: true // Hide the original image
-        live: true // Keep updating if the source changes
+    ColorOverlay {
+        anchors.fill: sourceImage
+        source: sourceImage
+        color: root.color
+        antialiasing: true
     }
 }

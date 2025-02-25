@@ -40,6 +40,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     Qml 
     QuickControls2
     ShaderTools
+    Core5Compat
 )
 
 # -----------------------------------------------------------------------------
@@ -98,6 +99,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Qml
     Qt6::QuickControls2
     Qt6::ShaderTools
+    Qt6::Core5Compat  
 )
 target_compile_definitions(${PROJECT_NAME} PRIVATE QT_QML_DEBUG)
 
@@ -181,5 +183,10 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/icons/google.svg
         assets/icons/arrow-right.svg
         assets/icons/log-out.svg
-    # The shader is embedded by qt6_add_shaders()—no manual addition is needed.
+    IMPORTS
+        QtQuick
+        QtQuick.Controls
+        QtQuick.Layouts
+        QtQuick.Effects
+        Qt5Compat.GraphicalEffects 
 )
