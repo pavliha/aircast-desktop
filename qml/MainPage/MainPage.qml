@@ -1,11 +1,15 @@
-// MainPage
+// qml/MainPage/MainPage.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import AircastDesktop 1.0
 
 Page {
-    header: Header {}
+    id: root
+
+    header: Header {
+        UserMenuDropdown {}
+    }
 
     background: Rectangle {
         color: Theme.background

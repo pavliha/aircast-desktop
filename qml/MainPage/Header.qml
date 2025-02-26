@@ -1,3 +1,4 @@
+// qml/ui/Header.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -8,8 +9,10 @@ ToolBar {
     height: 64
     width: parent.width
 
+    default property alias content: additionalContentContainer.children
+
     background: Rectangle {
-        color: Theme.background
+        color: "transparent"
     }
 
     RowLayout {
@@ -33,11 +36,14 @@ ToolBar {
             Layout.fillWidth: true
         }
 
-        ThemeToggleDropdown {
+        // Container for additional content passed as children
+        RowLayout {
+            id: additionalContentContainer
+            spacing: Theme.spacing.md
             Layout.alignment: Qt.AlignVCenter
         }
 
-        UserMenuDropdown {
+        ThemeToggleDropdown {
             Layout.alignment: Qt.AlignVCenter
         }
     }

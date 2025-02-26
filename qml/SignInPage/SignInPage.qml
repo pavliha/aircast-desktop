@@ -1,3 +1,4 @@
+// qml/SignInPage/SignInPage.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -6,6 +7,8 @@ import AircastDesktop 1.0
 Page {
     id: root
     signal signInSuccessful
+
+    header: Header {}
 
     background: Rectangle {
         anchors.fill: parent

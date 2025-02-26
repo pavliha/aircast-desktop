@@ -30,10 +30,12 @@ Button {
             horizontalAlignment: Text.AlignHCenter
         }
 
-        Image {
+        Icon {
             id: arrowIcon
             source: "qrc:/AircastDesktop/assets/icons/arrow-right.svg"
-            sourceSize: Qt.size(16, 16)
+            width: 16
+            height: 16
+            color: Theme.foreground
             opacity: googleButton.hovered ? 1 : 0
             Layout.preferredWidth: 16
             Layout.rightMargin: 12
