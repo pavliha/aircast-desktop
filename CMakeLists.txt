@@ -123,6 +123,7 @@ set(MYPROJECT_QML_FILES
     qml/MainPage/DeviceDelegate.qml
     qml/MainPage/MainPage.qml
     qml/MainPage/UserMenuDropdown.qml
+    qml/MainPage/ThemeToggleDropdown.qml
     # SignInPage Components
     qml/SignInPage/SignInPage.qml
     qml/SignInPage/ProtectedByAirCast.qml
@@ -135,12 +136,8 @@ set(MYPROJECT_QML_FILES
     # UI Components
     qml/ui/Button.qml
     qml/ui/Icon.qml
-    # Menu Components
-    qml/ui/menu/Menu.qml
-    qml/ui/menu/MenuButton.qml
-    qml/ui/menu/MenuItem.qml
-    qml/ui/menu/MenuProfile.qml
-    qml/ui/menu/MenuSeparator.qml
+    qml/ui/DropShadow.qml
+    qml/ui/ThemeItemDelegate.qml
     # Card Components
     qml/ui/card/Card.qml
     qml/ui/card/CardContent.qml
@@ -175,7 +172,6 @@ qt_add_qml_module(${PROJECT_NAME}
         ${MYPROJECT_QML_FILES}
         ${MYPROJECT_QML_SINGLETON_FILES}
     RESOURCES
-        assets/icons/theme.svg
         assets/icons/circle-user.svg
         assets/icons/info.svg
         assets/icons/plus-circle.svg
@@ -183,6 +179,9 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/icons/google.svg
         assets/icons/arrow-right.svg
         assets/icons/log-out.svg
+        assets/icons/sun.svg
+        assets/icons/moon.svg
+        assets/icons/monitor.svg
     IMPORTS
         QtQuick
         QtQuick.Controls

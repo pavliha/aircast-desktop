@@ -5,11 +5,10 @@ Item {
     id: root
     property url source: ""
     property color color: Theme.foreground
-    property int iconWidth: 24
-    property int iconHeight: 24
+    property int size: 24
 
-    width: iconWidth
-    height: iconHeight
+    width: size
+    height: size
 
     Image {
         id: sourceImage

@@ -7,6 +7,23 @@ QtObject {
     readonly property bool isDark: ThemeChecker.darkMode
     // A convenience property that returns a string "dark" or "light"
     readonly property string mode: isDark ? "dark" : "light"
+    
+    // Set up a connection to handle theme changes
+    property Connections themeConnection: Connections {
+        target: ThemeChecker
+        function onDarkModeChanged() {
+            // Force a re-evaluation of all theme properties
+            themeChangeNotifier.notify()
+        }
+    }
+    
+    // This property is used to notify QML that the theme has changed
+    property QtObject themeChangeNotifier: QtObject {
+        property int counter: 0
+        function notify() {
+            counter++
+        }
+    }
 
     // Helper function to convert HSL values (0-360, 0-100, 0-100) to an RGBA color.
     function hslToRgb(h, s, l) {
@@ -57,24 +74,45 @@ QtObject {
     readonly property color _darkMutedForeground: hslToRgb(215, 20.2, 65.1) // #94A3B8
 
     // Dynamic colors based on theme
-    readonly property color background: isDark ? _darkBackground : _lightBackground         // #000000 or #FFFFFF
-    readonly property color foreground: isDark ? _darkForeground : _lightForeground         // #F8F8F8 or #0F172A
-    readonly property color card: isDark ? _darkCard : _lightCard                           // #020817 or #FFFFFF
-    readonly property color cardForeground: isDark ? _darkCardForeground : _lightCardForeground // #F8F8F8 or #0F172A
-    readonly property color border: isDark ? _darkBorder : _lightBorder                     // #1E293B or #E2E8F0
-    readonly property color mutedForeground: isDark ? _darkMutedForeground : _lightMutedForeground // #94A3B8 or #64748B
-
+    property color background: isDark ? _darkBackground : _lightBackground         // #000000 or #FFFFFF
+    property color foreground: isDark ? _darkForeground : _lightForeground         // #F8F8F8 or #0F172A
+    property color card: isDark ? _darkCard : _lightCard                           // #020817 or #FFFFFF
+    property color cardForeground: isDark ? _darkCardForeground : _lightCardForeground // #F8F8F8 or #0F172A
+    property color border: isDark ? _darkBorder : _lightBorder                     // #1E293B or #E2E8F0
+    property color mutedForeground: isDark ? _darkMutedForeground : _lightMutedForeground // #94A3B8 or #64748B
+    
     // Additional colors
-    readonly property color primary: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2) // #F8F8F8 or #0F172A
-    readonly property color primaryForeground: isDark ? hslToRgb(222.2, 47.4, 11.2) : hslToRgb(210, 40, 98) // #0F172A or #F8F8F8
-    readonly property color destructive: isDark ? hslToRgb(0, 62.8, 30.6) : hslToRgb(0, 100, 50) // #9D0000 or #FF0000
-    readonly property color destructiveForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(210, 40, 98) // #F8F8F8 or #F8F8F8
-    readonly property color accent: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(210, 40, 96.1) // #1E293B or #F5F5F7
-    readonly property color accentForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2) // #F8F8F8 or #0F172A
-    readonly property color secondary: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(210, 40, 96.1) // #1E293B or #F5F5F7
-    readonly property color secondaryForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2) // #F8F8F8 or #0F172A
-    readonly property color ring: isDark ? hslToRgb(212.7, 26.8, 83.9) : hslToRgb(222.2, 84, 4.9) // #D1D6E0 or #020817
-    readonly property color input: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(214.3, 31.8, 91.4) // #1E293B or #E2E8F0
+    property color primary: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2) // #F8F8F8 or #0F172A
+    property color primaryForeground: isDark ? hslToRgb(222.2, 47.4, 11.2) : hslToRgb(210, 40, 98) // #0F172A or #F8F8F8
+    property color destructive: isDark ? hslToRgb(0, 62.8, 30.6) : hslToRgb(0, 100, 50) // #9D0000 or #FF0000
+    property color destructiveForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(210, 40, 98) // #F8F8F8 or #F8F8F8
+    property color accent: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(210, 40, 96.1) // #1E293B or #F5F5F7
+    property color accentForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2) // #F8F8F8 or #0F172A
+    property color secondary: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(210, 40, 96.1) // #1E293B or #F5F5F7
+    property color secondaryForeground: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2) // #F8F8F8 or #0F172A
+    property color ring: isDark ? hslToRgb(212.7, 26.8, 83.9) : hslToRgb(222.2, 84, 4.9) // #D1D6E0 or #020817
+    property color input: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(214.3, 31.8, 91.4) // #1E293B or #E2E8F0
+    property color popupBackground: card  // Same as card: #020817 (dark) or #FFFFFF (light)
+    property color shadow: isDark ? Qt.rgba(0, 0, 0, 0.5) : Qt.rgba(0, 0, 0, 0.1) // rgba(0,0,0,0.5) or rgba(0,0,0,0.1)
+    
+    Behavior on background { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on foreground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on card { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on cardForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on border { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on mutedForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on primary { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on primaryForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on destructive { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on destructiveForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on accent { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on accentForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on secondary { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on secondaryForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on ring { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on input { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on popupBackground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+    Behavior on shadow { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
     // Spacing matching Shadcn design system
     readonly property QtObject spacing: QtObject {
@@ -111,7 +149,4 @@ QtObject {
         // If we can't process the color, return it unchanged
         return color;
     }
-
-    readonly property color popupBackground: card  // Same as card: #020817 (dark) or #FFFFFF (light)
-    readonly property color shadow: isDark ? Qt.rgba(0, 0, 0, 0.5) : Qt.rgba(0, 0, 0, 0.1) // rgba(0,0,0,0.5) or rgba(0,0,0,0.1)
 }

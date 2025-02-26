@@ -33,15 +33,8 @@ ToolBar {
             Layout.fillWidth: true
         }
 
-        Button {
-            size: "icon"
-            variant: "outline"
-            contentItem: Icon {
-                source: "qrc:/AircastDesktop/assets/icons/theme.svg"
-                color: Theme.foreground
-                width: 20
-                height: 20
-            }
+        ThemeToggleDropdown {
+            Layout.alignment: Qt.AlignVCenter
         }
 
         UserMenuDropdown {
