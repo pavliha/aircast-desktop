@@ -13,7 +13,7 @@ MenuItem {
     property bool positionFirst: false
     property bool positionLast: false
     
-    implicitHeight: 50 // Minimum height for the button
+    implicitHeight: 48
     
     background: Rectangle {
         color: "transparent"
@@ -52,18 +52,18 @@ MenuItem {
     }
     
     contentItem: RowLayout {
-        spacing: 12
+        spacing: 8
         anchors.fill: parent
-        anchors.leftMargin: 20
-        anchors.rightMargin: 20
+        anchors.leftMargin: 16
+        anchors.rightMargin: 16
         
         Icon {
             visible: root.iconSource != ""
             source: root.iconSource
             color: root.hovered || root.visualFocus || root.pressed ? 
                   Theme.accentForeground : Theme.foreground
-            width: 18
-            height: 18
+            width: 16
+            height: 16
         }
         
         Label {

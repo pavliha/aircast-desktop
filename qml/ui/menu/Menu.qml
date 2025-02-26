@@ -13,8 +13,8 @@ Menu {
     width: 280
     
     // Add top and bottom margins
-    topMargin: 8
-    bottomMargin: 8
+    // topMargin: 8
+    // bottomMargin: 8
     
     // Modern shadow effect using multiple layers
     background: Item {

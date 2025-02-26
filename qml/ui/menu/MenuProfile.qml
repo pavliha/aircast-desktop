@@ -15,7 +15,7 @@ ItemDelegate {
     property bool positionLast: false
     
     width: parent ? parent.width : 280
-    height: 90
+    height: 64
     
     background: Rectangle {
         color: "transparent"
@@ -54,12 +54,12 @@ ItemDelegate {
     }
     
     contentItem: RowLayout {
-        spacing: 16
+        spacing: 8
         anchors.fill: parent
-        anchors.leftMargin: 20
-        anchors.rightMargin: 20
-        anchors.topMargin: 12
-        anchors.bottomMargin: 12
+        anchors.leftMargin: 16
+        anchors.rightMargin: 16
+        anchors.topMargin: 8
+        anchors.bottomMargin: 8
         
         Rectangle {
             width: 44
