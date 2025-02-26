@@ -38,7 +38,7 @@ class ThemeChecker : public QObject {
   void setDarkMode(bool dark) {
     if (m_manualDarkMode == dark && m_themeOverride) return;
 
-    m_themeOverride = true;
+    m_themeOverride = false;
     m_manualDarkMode = dark;
 
     QSettings settings;
