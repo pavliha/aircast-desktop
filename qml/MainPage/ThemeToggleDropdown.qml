@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 import Qt5Compat.GraphicalEffects
 import AircastDesktop 1.0
-import "../ui" as UI
 
 Item {
     id: root
@@ -87,7 +86,7 @@ Item {
 
             Repeater {
                 model: ["Light", "Dark", "System"]
-                delegate: UI.ThemeItemDelegate {
+                delegate: ThemeItemDelegate {
                     required property string modelData
                     required property int index
 
