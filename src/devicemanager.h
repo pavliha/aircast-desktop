@@ -1,12 +1,14 @@
+// DeviceManager.h
 #ifndef DEVICEMANAGER_H
 #define DEVICEMANAGER_H
 
-#include <QJsonArray>
 #include <QJsonDocument>
-#include <QJsonObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
+#include <QVariantList>
+
+#include "AuthManager.h"
 
 class DeviceManager : public QObject {
   Q_OBJECT
@@ -14,20 +16,26 @@ class DeviceManager : public QObject {
 
  public:
   explicit DeviceManager(QObject *parent = nullptr);
+
   QVariantList devices() const { return m_devices; }
 
  public slots:
   void fetchDevices();
+  void setAuthManager(AuthManager *authManager);
 
  signals:
   void devicesChanged();
+  void error(const QString &message);
 
  private slots:
   void handleNetworkReply(QNetworkReply *reply);
+  void onAuthStatusChanged();
 
  private:
-  QNetworkAccessManager *m_manager;
+  QNetworkAccessManager *m_networkManager;
   QVariantList m_devices;
+  AuthManager *m_authManager = nullptr;
+  QString m_apiBaseUrl = "http://localhost:3333";
 };
 
 #endif  // DEVICEMANAGER_H

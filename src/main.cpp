@@ -18,21 +18,27 @@ int main(int argc, char *argv[]) {
   app.setOrganizationDomain("aircast.one");
   app.setApplicationName("AircastDesktop");
 
-  // Create the QML engine first
+  // Create instances of managers
+  AuthManager authManager;
+  DeviceManager deviceManager;
+
+  // Connect device manager to auth manager
+  deviceManager.setAuthManager(&authManager);
+
+  // Create the QML engine
   QQmlApplicationEngine engine;
 
-  // Register types
+  // Register ThemeChecker as singleton
   ThemeChecker themeChecker;
   qmlRegisterSingletonInstance("AircastDesktop", 1, 0, "ThemeChecker",
                                &themeChecker);
 
-  // Manually register the AuthManager type - this is important
+  // Register the AuthManager type
   qmlRegisterType<AuthManager>("AircastDesktop", 1, 0, "AuthManager");
 
   QQuickStyle::setStyle("Basic");
 
-  // Create the context properties
-  DeviceManager deviceManager;
+  // Expose context properties
   engine.rootContext()->setContextProperty("deviceManager", &deviceManager);
 
   engine.addImportPath("qrc:///");
