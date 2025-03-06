@@ -45,9 +45,6 @@ ApplicationWindow {
         id: signInPage
         SignInPage {
             objectName: "signInPage"
-
-            // The SignInPage should use authManager to handle the sign-in process
-            // We don't need to manually trigger navigation as it's handled by authManager signals
         }
     }
 
@@ -55,6 +52,7 @@ ApplicationWindow {
         id: mainPage
         MainPage {
             objectName: "mainPage"
+            user: authManager.userData || {}
         }
     }
 

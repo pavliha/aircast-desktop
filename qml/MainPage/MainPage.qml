@@ -7,8 +7,13 @@ import AircastDesktop 1.0
 Page {
     id: root
 
+    property var user: ({})
+
     header: Header {
-        UserMenuDropdown {}
+        UserMenuDropdown {
+            userName: user && user["name"] ? user["name"] : ""
+            userEmail: user && user["email"] ? user["email"] : ""
+        }
     }
 
     background: Rectangle {
