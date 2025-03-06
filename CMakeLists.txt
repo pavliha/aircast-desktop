@@ -9,6 +9,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # -----------------------------------------------------------------------------
+# macOS specific settings
+# -----------------------------------------------------------------------------
+if(APPLE)
+    set(MACOSX_BUNDLE_ICON_FILE "AppIcon.icns")
+    set(MACOSX_BUNDLE_GUI_IDENTIFIER "one.aircast.desktop")
+    set(MACOSX_BUNDLE_BUNDLE_NAME "Aircast")
+    set(MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}")
+    set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
+    set(MACOSX_BUNDLE_COPYRIGHT "Copyright © 2025 Aircast")
+    set(MACOSX_BUNDLE_INFO_STRING "AircastDesktop - Connect to your devices")
+endif()
+
+# -----------------------------------------------------------------------------
 # Specify output directories
 # -----------------------------------------------------------------------------
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
@@ -52,14 +65,38 @@ qt6_policy(SET QTP0004 NEW)
 # -----------------------------------------------------------------------------
 # Define the executable target and add the source file(s)
 # -----------------------------------------------------------------------------
-qt_add_executable(${PROJECT_NAME}
-    src/main.cpp
-    src/AuthManager.h
-    src/AuthManager.cpp
-    src/DeviceManager.h
-    src/DeviceManager.cpp
-    src/ThemeChecker.h
-)
+if(APPLE)
+    # For macOS, create a bundle
+    qt_add_executable(${PROJECT_NAME} MACOSX_BUNDLE
+        src/main.cpp
+        src/AuthManager.h
+        src/AuthManager.cpp
+        src/DeviceManager.h
+        src/DeviceManager.cpp
+        src/ThemeChecker.h
+    )
+    
+    # Set app icon for macOS
+    set(APP_ICON_MACOS "${CMAKE_CURRENT_SOURCE_DIR}/assets/AppIcon.icns")
+    if(EXISTS "${APP_ICON_MACOS}")
+        target_sources(${PROJECT_NAME} PRIVATE "${APP_ICON_MACOS}")
+        set_source_files_properties("${APP_ICON_MACOS}" PROPERTIES
+            MACOSX_PACKAGE_LOCATION "Resources"
+        )
+    else()
+        message(WARNING "App icon not found at: ${APP_ICON_MACOS}")
+    endif()
+else()
+    # For non-macOS platforms, create a regular executable
+    qt_add_executable(${PROJECT_NAME}
+        src/main.cpp
+        src/AuthManager.h
+        src/AuthManager.cpp
+        src/DeviceManager.h
+        src/DeviceManager.cpp
+        src/ThemeChecker.h
+    )
+endif()
 
 message(STATUS "Current source dir: ${CMAKE_CURRENT_SOURCE_DIR}")
 message(STATUS "Looking for shader in: ${CMAKE_CURRENT_SOURCE_DIR}/shaders/icon.frag")
@@ -194,3 +231,35 @@ qt_add_qml_module(${PROJECT_NAME}
         QtQuick.Effects
         Qt5Compat.GraphicalEffects 
 )
+
+# -----------------------------------------------------------------------------
+# macOS specific configuration
+# -----------------------------------------------------------------------------
+if(APPLE)
+    # Set additional properties for the macOS bundle
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist.in"
+    )
+    
+    # Add deployment step for macOS
+    # This uses macdeployqt to include all necessary Qt libraries in the bundle
+    if(CMAKE_BUILD_TYPE STREQUAL "Release" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+        # Find macdeployqt
+        get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
+        get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
+        find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
+        
+        if(MACDEPLOYQT_EXECUTABLE)
+            add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                COMMAND ${MACDEPLOYQT_EXECUTABLE}
+                "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../.."
+                -qmldir=${CMAKE_CURRENT_SOURCE_DIR}/qml
+                -verbose=1
+                COMMENT "Running macdeployqt to deploy Qt dependencies..."
+            )
+        else()
+            message(WARNING "macdeployqt not found, deployment will not be performed")
+        endif()
+    endif()
+endif()

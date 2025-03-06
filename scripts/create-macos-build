@@ -1,0 +1,264 @@
+#!/bin/bash
+# macOS Build and Packaging Script for AircastDesktop
+# This script builds the application and creates a proper macOS bundle
+
+set -e  # Exit on any error
+
+# Create necessary directories
+mkdir -p build-macos
+mkdir -p macos
+
+# Check if Info.plist.in exists, otherwise create it
+if [ ! -d "macos" ]; then
+    mkdir -p macos
+fi
+
+if [ ! -f "macos/Info.plist.in" ]; then
+    echo "Creating Info.plist.in template..."
+    cat > macos/Info.plist.in << 'EOL'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundleExecutable</key>
+    <string>${MACOSX_BUNDLE_EXECUTABLE_NAME}</string>
+    <key>CFBundleIconFile</key>
+    <string>${MACOSX_BUNDLE_ICON_FILE}</string>
+    <key>CFBundleIdentifier</key>
+    <string>${MACOSX_BUNDLE_GUI_IDENTIFIER}</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>${MACOSX_BUNDLE_BUNDLE_NAME}</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>${MACOSX_BUNDLE_SHORT_VERSION_STRING}</string>
+    <key>CFBundleVersion</key>
+    <string>${MACOSX_BUNDLE_BUNDLE_VERSION}</string>
+    <key>CSResourcesFileMapped</key>
+    <true/>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.utilities</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSHumanReadableCopyright</key>
+    <string>${MACOSX_BUNDLE_COPYRIGHT}</string>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>NSSupportsAutomaticGraphicsSwitching</key>
+    <true/>
+</dict>
+</plist>
+EOL
+fi
+
+# Check if app icon exists, if not, warn the user
+if [ ! -f "assets/AppIcon.icns" ]; then
+    echo "Warning: App icon (assets/AppIcon.icns) not found."
+    echo "You should create an .icns file for your application icon."
+    echo "You can use the following commands as a reference:"
+    echo ""
+    echo "  mkdir -p assets/AppIcon.iconset"
+    echo "  # Generate different sized icons from your source image"
+    echo "  sips -z 16 16     source_image.png --out assets/AppIcon.iconset/icon_16x16.png"
+    echo "  sips -z 32 32     source_image.png --out assets/AppIcon.iconset/icon_16x16@2x.png"
+    echo "  sips -z 32 32     source_image.png --out assets/AppIcon.iconset/icon_32x32.png"
+    echo "  sips -z 64 64     source_image.png --out assets/AppIcon.iconset/icon_32x32@2x.png"
+    echo "  sips -z 128 128   source_image.png --out assets/AppIcon.iconset/icon_128x128.png"
+    echo "  sips -z 256 256   source_image.png --out assets/AppIcon.iconset/icon_128x128@2x.png"
+    echo "  sips -z 256 256   source_image.png --out assets/AppIcon.iconset/icon_256x256.png"
+    echo "  sips -z 512 512   source_image.png --out assets/AppIcon.iconset/icon_256x256@2x.png"
+    echo "  sips -z 512 512   source_image.png --out assets/AppIcon.iconset/icon_512x512.png"
+    echo "  sips -z 1024 1024 source_image.png --out assets/AppIcon.iconset/icon_512x512@2x.png"
+    echo "  # Convert the iconset to icns"
+    echo "  iconutil -c icns assets/AppIcon.iconset -o assets/AppIcon.icns"
+    echo ""
+fi
+
+# Build Configuration - Debug or Release
+BUILD_TYPE="Release"
+if [ "$1" == "debug" ]; then
+    BUILD_TYPE="Debug"
+    echo "Building in Debug mode..."
+else
+    echo "Building in Release mode..."
+fi
+
+# Change to the build directory
+cd build-macos
+
+# Configure with CMake
+echo "Configuring the project with CMake..."
+cmake .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+
+# Build the project
+echo "Building the project..."
+cmake --build . --config ${BUILD_TYPE}
+
+# Check if the build was successful
+if [ $? -ne 0 ]; then
+    echo "Build failed!"
+    exit 1
+fi
+
+# Find the app bundle
+APP_BUNDLE=$(find . -name "*.app" -type d | head -n 1)
+if [ -z "$APP_BUNDLE" ]; then
+    echo "Error: Could not find the built app bundle."
+    exit 1
+fi
+
+echo "Build completed successfully!"
+echo "App bundle created at: $(pwd)/${APP_BUNDLE}"
+
+# If in Release mode, run macdeployqt manually if it wasn't already run by CMake
+if [ "$BUILD_TYPE" == "Release" ]; then
+    # Try to find macdeployqt
+    if [ -z "$QTDIR" ]; then
+        # Try to find Qt installation
+        if [ -d "/usr/local/opt/qt6" ]; then
+            QTDIR="/usr/local/opt/qt6"
+        elif [ -d "$HOME/Qt" ]; then
+            # Find the newest Qt version
+            QTDIR=$(find $HOME/Qt -maxdepth 1 -type d -name "6.*" | sort -r | head -n 1)
+        fi
+    fi
+    
+    if [ -n "$QTDIR" ]; then
+        MACDEPLOYQT="$QTDIR/bin/macdeployqt"
+        if [ ! -f "$MACDEPLOYQT" ]; then
+            # Try to find it in PATH
+            MACDEPLOYQT=$(which macdeployqt)
+        fi
+        
+        if [ -n "$MACDEPLOYQT" ]; then
+            echo "Running macdeployqt to include Qt libraries..."
+            $MACDEPLOYQT "${APP_BUNDLE}" -qmldir=../qml -verbose=1
+            
+            if [ $? -eq 0 ]; then
+                echo "macdeployqt completed successfully."
+            else
+                echo "Warning: macdeployqt encountered issues."
+            fi
+        else
+            echo "Warning: macdeployqt not found. The app might not run on other machines."
+        fi
+    else
+        echo "Warning: Qt directory not found. Cannot run macdeployqt."
+    fi
+fi
+
+# Ask if the user wants to create a DMG
+if [ "$BUILD_TYPE" == "Release" ]; then
+    echo "Would you like to create a DMG file for distribution? (y/n)"
+    read CREATE_DMG
+    
+    if [ "$CREATE_DMG" == "y" ] || [ "$CREATE_DMG" == "Y" ]; then
+        # Check if create-dmg is installed
+        if command -v create-dmg &> /dev/null; then
+            DMG_NAME="AircastDesktop-$(date +%Y%m%d).dmg"
+            echo "Creating DMG file: $DMG_NAME"
+            
+            # Use a simplified create-dmg command that avoids the regex errors
+            # First check if background image exists
+            BACKGROUND_IMG=""
+            if [ -f "../assets/dmg-background.png" ]; then
+                BACKGROUND_IMG="--background ../assets/dmg-background.png"
+            fi
+            
+            # Check if app icon exists
+            VOLUME_ICON=""
+            if [ -f "../assets/AppIcon.icns" ]; then
+                VOLUME_ICON="--volicon ../assets/AppIcon.icns"
+            fi
+            
+            create-dmg \
+                --volname "AircastDesktop" \
+                $VOLUME_ICON \
+                $BACKGROUND_IMG \
+                --window-pos 200 120 \
+                --window-size 800 400 \
+                --icon-size 100 \
+                --icon "${APP_BUNDLE##*/}" 200 190 \
+                --app-drop-link 600 185 \
+                "../${DMG_NAME}" \
+                "${APP_BUNDLE}"
+            
+            if [ $? -eq 0 ]; then
+                # Move DMG to parent directory if it was created in a different location
+                if [ -f "../${DMG_NAME}" ]; then
+                    echo "DMG created successfully: $(pwd)/../${DMG_NAME}"
+                else
+                    echo "DMG created successfully: $(pwd)/${DMG_NAME}"
+                fi
+            else
+                echo "Error creating DMG file."
+                echo "Trying alternative method..."
+                
+                # Alternative method
+                hdiutil create -volname "AircastDesktop" -srcfolder "${APP_BUNDLE}" -ov -format UDZO "../${DMG_NAME}"
+                
+                if [ $? -eq 0 ]; then
+                    echo "DMG created successfully: $(pwd)/../${DMG_NAME}"
+                else
+                    echo "Error creating DMG file using alternative method."
+                fi
+            fi
+        else
+            echo "create-dmg not found. Would you like to install it? (y/n)"
+            read INSTALL_CREATE_DMG
+            
+            if [ "$INSTALL_CREATE_DMG" == "y" ] || [ "$INSTALL_CREATE_DMG" == "Y" ]; then
+                echo "Installing create-dmg..."
+                brew install create-dmg
+                
+                if [ $? -eq 0 ]; then
+                    echo "create-dmg installed. Running DMG creation now..."
+                    
+                    DMG_NAME="AircastDesktop-$(date +%Y%m%d).dmg"
+                    echo "Creating DMG file: $DMG_NAME"
+                    
+                    # First check if background image exists
+                    BACKGROUND_IMG=""
+                    if [ -f "../assets/dmg-background.png" ]; then
+                        BACKGROUND_IMG="--background ../assets/dmg-background.png"
+                    fi
+                    
+                    # Check if app icon exists
+                    VOLUME_ICON=""
+                    if [ -f "../assets/AppIcon.icns" ]; then
+                        VOLUME_ICON="--volicon ../assets/AppIcon.icns"
+                    fi
+                    
+                    create-dmg \
+                        --volname "AircastDesktop" \
+                        $VOLUME_ICON \
+                        $BACKGROUND_IMG \
+                        --window-pos 200 120 \
+                        --window-size 800 400 \
+                        --icon-size 100 \
+                        --icon "${APP_BUNDLE##*/}" 200 190 \
+                        --app-drop-link 600 185 \
+                        "../${DMG_NAME}" \
+                        "${APP_BUNDLE}"
+                    
+                    if [ $? -eq 0 ]; then
+                        echo "DMG created successfully: $(pwd)/../${DMG_NAME}"
+                    else
+                        echo "Error creating DMG file."
+                    fi
+                else
+                    echo "Error installing create-dmg."
+                fi
+            else
+                echo "You can install create-dmg manually with: brew install create-dmg"
+                echo "Alternatively, you can create a DMG using Disk Utility."
+            fi
+        fi
+    fi
+fi
+
+echo "Done!"

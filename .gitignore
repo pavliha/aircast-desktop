@@ -69,3 +69,4 @@ _deps
 .qtc_clangd/
 .cache/
 .qmlls.ini
+.idea
