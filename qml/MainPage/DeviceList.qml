@@ -10,6 +10,9 @@ Item {
 
     property alias model: listView.model
 
+    signal deviceConnectClicked(string deviceId)
+    signal deviceSettingsClicked(string deviceId)
+
     // Empty state when no devices
     EmptyState {
         anchors.centerIn: parent
@@ -23,7 +26,19 @@ Item {
         clip: true
         visible: listView.count > 0
 
-        delegate: DeviceDelegate {}
+        delegate: DeviceListItem {
+            deviceName: modelData.name || ""
+            deviceId: modelData.id || ""
+            lastSeenTime: modelData.last_seen_at || modelData.lastSeenAt || ""
+
+            onConnectClicked: {
+                root.deviceConnectClicked(deviceId);
+            }
+
+            onSettingsClicked: {
+                root.deviceSettingsClicked(deviceId);
+            }
+        }
 
         // Add scrollbar if needed
         ScrollBar.vertical: ScrollBar {

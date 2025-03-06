@@ -122,10 +122,11 @@ set(MYPROJECT_QML_FILES
     qml/MainPage/InfoBanner.qml
     qml/MainPage/DeviceList.qml
     qml/MainPage/EmptyState.qml
-    qml/MainPage/DeviceDelegate.qml
+    qml/MainPage/DeviceListItem.qml
     qml/MainPage/MainPage.qml
     qml/MainPage/UserMenuDropdown.qml
     qml/MainPage/ThemeToggleDropdown.qml
+    qml/MainPage/StatusBadge.qml
     # SignInPage Components
     qml/SignInPage/SignInPage.qml
     qml/SignInPage/ProtectedByAirCast.qml
@@ -140,6 +141,7 @@ set(MYPROJECT_QML_FILES
     qml/ui/Icon.qml
     qml/ui/DropShadow.qml
     qml/ui/ThemeItemDelegate.qml
+    qml/ui/Badge.qml
     # Card Components
     qml/ui/card/Card.qml
     qml/ui/card/CardContent.qml
@@ -184,6 +186,7 @@ qt_add_qml_module(${PROJECT_NAME}
         assets/icons/sun.svg
         assets/icons/moon.svg
         assets/icons/monitor.svg
+        assets/icons/cable.svg
     IMPORTS
         QtQuick
         QtQuick.Controls
