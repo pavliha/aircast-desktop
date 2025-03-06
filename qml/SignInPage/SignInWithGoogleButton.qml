@@ -9,6 +9,9 @@ Button {
     variant: "outline"
     size: "lg"
 
+    // Add states for the sign-in process
+    property bool isLoading: false
+
     contentItem: RowLayout {
         spacing: 12
 
@@ -16,13 +19,28 @@ Button {
             Layout.preferredWidth: 12
         }
 
-        Image {
-            source: "qrc:/AircastDesktop/assets/icons/google.svg"
-            sourceSize: Qt.size(20, 20)
+        Item {
+            Layout.preferredWidth: 20
+            Layout.preferredHeight: 20
+
+            Image {
+                anchors.fill: parent
+                source: "qrc:/AircastDesktop/assets/icons/google.svg"
+                sourceSize: Qt.size(20, 20)
+                visible: !googleButton.isLoading
+            }
+
+            BusyIndicator {
+                anchors.fill: parent
+                running: googleButton.isLoading
+                visible: googleButton.isLoading
+                // You may need to adjust this based on your theme
+                palette.dark: Theme.primary
+            }
         }
 
         Text {
-            text: "Continue with Google"
+            text: googleButton.isLoading ? "Signing in..." : "Continue with Google"
             color: Theme.foreground
             font.pixelSize: 14
             font.weight: Font.Medium
@@ -36,7 +54,7 @@ Button {
             width: 16
             height: 16
             color: Theme.foreground
-            opacity: googleButton.hovered ? 1 : 0
+            opacity: googleButton.hovered && !googleButton.isLoading ? 1 : 0
             Layout.preferredWidth: 16
             Layout.rightMargin: 12
 
@@ -48,5 +66,27 @@ Button {
         }
     }
 
-    onClicked: root.signInSuccessful()
+    // Connect to the AuthManager
+    onClicked: {
+        if (!isLoading) {
+            isLoading = true;
+            authManager.startGoogleSignIn();
+        }
+    }
+
+    // Connect to the AuthManager's signals
+    Connections {
+        target: authManager
+
+        function onSignInSuccessful() {
+            googleButton.isLoading = false;
+            root.signInSuccessful();
+        }
+
+        function onSignInFailed(message) {
+            googleButton.isLoading = false;
+            // You might want to show an error message here
+            console.error("Sign-in failed:", message);
+        }
+    }
 }

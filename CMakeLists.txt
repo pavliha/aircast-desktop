@@ -54,6 +54,8 @@ qt6_policy(SET QTP0004 NEW)
 # -----------------------------------------------------------------------------
 qt_add_executable(${PROJECT_NAME}
     src/main.cpp
+    src/AuthManager.h
+    src/AuthManager.cpp
     src/DeviceManager.h
     src/DeviceManager.cpp
     src/ThemeChecker.h
