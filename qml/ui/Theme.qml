@@ -4,24 +4,24 @@ import AircastDesktop 1.0
 
 QtObject {
     // Use the darkMode property from the C++ ThemeChecker singleton.
-    readonly property bool isDark: ThemeChecker.darkMode
+    readonly property bool isDark: themeChecker.darkMode
     // A convenience property that returns a string "dark" or "light"
     readonly property string mode: isDark ? "dark" : "light"
-    
+
     // Set up a connection to handle theme changes
     property Connections themeConnection: Connections {
-        target: ThemeChecker
+        target: themeChecker
         function onDarkModeChanged() {
             // Force a re-evaluation of all theme properties
-            themeChangeNotifier.notify()
+            themeChangeNotifier.notify();
         }
     }
-    
+
     // This property is used to notify QML that the theme has changed
     property QtObject themeChangeNotifier: QtObject {
         property int counter: 0
         function notify() {
-            counter++
+            counter++;
         }
     }
 
@@ -80,7 +80,7 @@ QtObject {
     property color cardForeground: isDark ? _darkCardForeground : _lightCardForeground // #F8F8F8 or #0F172A
     property color border: isDark ? _darkBorder : _lightBorder                     // #1E293B or #E2E8F0
     property color mutedForeground: isDark ? _darkMutedForeground : _lightMutedForeground // #94A3B8 or #64748B
-    
+
     // Additional colors
     property color primary: isDark ? hslToRgb(210, 40, 98) : hslToRgb(222.2, 47.4, 11.2) // #F8F8F8 or #0F172A
     property color primaryForeground: isDark ? hslToRgb(222.2, 47.4, 11.2) : hslToRgb(210, 40, 98) // #0F172A or #F8F8F8
@@ -94,25 +94,115 @@ QtObject {
     property color input: isDark ? hslToRgb(217.2, 32.6, 17.5) : hslToRgb(214.3, 31.8, 91.4) // #1E293B or #E2E8F0
     property color popupBackground: card  // Same as card: #020817 (dark) or #FFFFFF (light)
     property color shadow: isDark ? Qt.rgba(0, 0, 0, 0.5) : Qt.rgba(0, 0, 0, 0.1) // rgba(0,0,0,0.5) or rgba(0,0,0,0.1)
-    
-    Behavior on background { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on foreground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on card { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on cardForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on border { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on mutedForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on primary { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on primaryForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on destructive { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on destructiveForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on accent { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on accentForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on secondary { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on secondaryForeground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on ring { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on input { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on popupBackground { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
-    Behavior on shadow { ColorAnimation { duration: 300; easing.type: Easing.OutQuad } }
+
+    Behavior on background {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on foreground {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on card {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on cardForeground {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on border {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on mutedForeground {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on primary {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on primaryForeground {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on destructive {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on destructiveForeground {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on accent {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on accentForeground {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on secondary {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on secondaryForeground {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on ring {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on input {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on popupBackground {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
+    Behavior on shadow {
+        ColorAnimation {
+            duration: 300
+            easing.type: Easing.OutQuad
+        }
+    }
 
     // Spacing matching Shadcn design system
     readonly property QtObject spacing: QtObject {

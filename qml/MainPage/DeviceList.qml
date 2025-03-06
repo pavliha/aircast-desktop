@@ -1,6 +1,7 @@
 // DeviceList.qml
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls as Controls
 import AircastDesktop 1.0
 
 Item {
@@ -41,9 +42,9 @@ Item {
         }
 
         // Add scrollbar if needed
-        ScrollBar.vertical: ScrollBar {
+        Controls.ScrollBar.vertical: Controls.ScrollBar {
             active: listView.movingVertically
-            policy: listView.contentHeight > listView.height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+            policy: listView.contentHeight > listView.height ? Controls.ScrollBar.AlwaysOn : Controls.ScrollBar.AsNeeded
         }
     }
 }

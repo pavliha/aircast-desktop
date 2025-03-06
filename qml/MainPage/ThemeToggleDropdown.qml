@@ -1,6 +1,6 @@
 // ThemeToggleDropdown.qml
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls as Controls
 import Qt5Compat.GraphicalEffects
 import AircastDesktop 1.0
 
@@ -20,8 +20,8 @@ Item {
         variant: "outline"
 
         contentItem: Icon {
-            // The Icon updates automatically when ThemeChecker.themeMode changes.
-            source: ThemeChecker.themeMode === "Light" ? "qrc:/AircastDesktop/assets/icons/sun.svg" : ThemeChecker.themeMode === "Dark" ? "qrc:/AircastDesktop/assets/icons/moon.svg" : "qrc:/AircastDesktop/assets/icons/monitor.svg"
+            // The Icon updates automatically when themeChecker.themeMode changes.
+            source: themeChecker.themeMode === "Light" ? "qrc:/AircastDesktop/assets/icons/sun.svg" : themeChecker.themeMode === "Dark" ? "qrc:/AircastDesktop/assets/icons/moon.svg" : "qrc:/AircastDesktop/assets/icons/monitor.svg"
             color: Theme.foreground
             width: 20
             height: 20
@@ -37,11 +37,11 @@ Item {
     }
 
     // Dropdown menu
-    Popup {
+    Controls.Popup {
         id: dropdownMenu
         width: 180
         padding: 8
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
 
         // Animations
         enter: Transition {
@@ -92,10 +92,10 @@ Item {
                     required property int index
 
                     themeName: modelData
-                    isSelected: ThemeChecker.themeMode === modelData
+                    isSelected: themeChecker.themeMode === modelData
 
                     onClicked: {
-                        ThemeChecker.setThemeMode(modelData);
+                        themeChecker.setThemeMode(modelData);
                         dropdownMenu.close();
                     }
                 }

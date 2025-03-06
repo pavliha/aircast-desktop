@@ -1,5 +1,6 @@
+// DropShadow.qml
 import QtQuick
-import Qt5Compat.GraphicalEffects 1.0
+import Qt5Compat.GraphicalEffects
 
 DropShadow {
     // Default properties

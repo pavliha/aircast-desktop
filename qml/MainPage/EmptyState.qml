@@ -1,6 +1,6 @@
 // EmptyState
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import AircastDesktop 1.0
 
@@ -15,7 +15,7 @@ ColumnLayout {
         height: 48
     }
 
-    Label {
+    Controls.Label {
         Layout.alignment: Qt.AlignHCenter
         text: "No Devices Found"
         color: Theme.foreground
@@ -23,7 +23,7 @@ ColumnLayout {
         font.weight: Font.Medium
     }
 
-    Label {
+    Controls.Label {
         Layout.alignment: Qt.AlignHCenter
         text: "Get started by adding your first device"
         color: Theme.mutedForeground

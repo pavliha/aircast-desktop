@@ -1,10 +1,8 @@
-// main.cpp
-#include <QDirIterator>
+#include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickStyle>
-#include <QtCore/QtCore>
 
 #include "AuthManager.h"
 #include "DeviceManager.h"
@@ -12,44 +10,42 @@
 
 int main(int argc, char *argv[]) {
   QGuiApplication app(argc, argv);
-
-  // Set application information for QSettings
   app.setOrganizationName("Aircast");
   app.setOrganizationDomain("aircast.one");
   app.setApplicationName("AircastDesktop");
 
-  // Create instances of managers
-  AuthManager authManager;
-  DeviceManager deviceManager;
+  // For displaying debug logs
+  qDebug() << "Starting Aircast Desktop...";
 
-  // Connect device manager to auth manager
-  deviceManager.setAuthManager(&authManager);
+  // Set Material theme
+  QQuickStyle::setStyle("Material");
 
-  // Create the QML engine
+  // Create instances of our C++ classes
+  AuthManager *authManager = new AuthManager(&app);
+  DeviceManager *deviceManager = new DeviceManager(&app);
+  ThemeChecker *themeChecker = new ThemeChecker(&app);
+
+  // Connect the AuthManager to DeviceManager
+  deviceManager->setAuthManager(authManager);
+
+  // Create QML Engine
   QQmlApplicationEngine engine;
 
-  // Register ThemeChecker as singleton
-  ThemeChecker themeChecker;
-  qmlRegisterSingletonInstance("AircastDesktop", 1, 0, "ThemeChecker",
-                               &themeChecker);
+  // Expose C++ objects to QML
+  engine.rootContext()->setContextProperty("authManager", authManager);
+  engine.rootContext()->setContextProperty("deviceManager", deviceManager);
+  engine.rootContext()->setContextProperty("themeChecker", themeChecker);
 
-  // Register the AuthManager type
-  qmlRegisterType<AuthManager>("AircastDesktop", 1, 0, "AuthManager");
+  // Load main QML file
+  const QUrl url(u"qrc:/AircastDesktop/qml/main.qml"_qs);
 
-  QQuickStyle::setStyle("Basic");
-
-  // Expose context properties
-  engine.rootContext()->setContextProperty("deviceManager", &deviceManager);
-
-  engine.addImportPath("qrc:///");
-  engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
-
-  const QUrl url(QStringLiteral("qrc:/AircastDesktop/qml/main.qml"));
+  QObject::connect(
+      &engine, &QQmlApplicationEngine::objectCreated, &app,
+      [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl) QCoreApplication::exit(-1);
+      },
+      Qt::QueuedConnection);
   engine.load(url);
-
-  if (engine.rootObjects().isEmpty()) {
-    return -1;
-  }
 
   return app.exec();
 }

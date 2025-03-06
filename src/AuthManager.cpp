@@ -1,6 +1,8 @@
 // AuthManager.cpp
+
 #include "AuthManager.h"
 
+#include <QDebug>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -12,6 +14,12 @@ AuthManager::AuthManager(QObject *parent)
       m_networkManager(new QNetworkAccessManager(this)),
       m_pollTimer(new QTimer(this)),
       m_isAuthenticated(false) {
+  // Initialize API URL from environment variable with fallback
+  m_apiBaseUrl =
+      qEnvironmentVariable("AIRCAST_API_URL", "http://localhost:3333");
+
+  qDebug() << "Auth using API URL:" << m_apiBaseUrl;
+
   // Configure polling timer
   m_pollTimer->setInterval(2000);  // Poll every 2 seconds
   connect(m_pollTimer, &QTimer::timeout, this,
@@ -35,6 +43,18 @@ QString AuthManager::userToken() const { return m_userToken; }
 
 QVariantMap AuthManager::userData() const { return m_userData; }
 
+void AuthManager::setApiBaseUrl(const QString &url) {
+  if (m_apiBaseUrl != url) {
+    m_apiBaseUrl = url;
+    emit apiBaseUrlChanged();
+
+    // Refresh user data if we're authenticated
+    if (m_isAuthenticated) {
+      getUserProfile();
+    }
+  }
+}
+
 void AuthManager::startGoogleSignIn() {
   // First, create an authentication session
   createAuthSession();
@@ -42,7 +62,7 @@ void AuthManager::startGoogleSignIn() {
 
 void AuthManager::signOut() {
   // Call the sign-out API
-  QNetworkRequest request(QUrl(API_BASE_URL + "/v1/auth/sessions"));
+  QNetworkRequest request(QUrl(m_apiBaseUrl + "/v1/auth/sessions"));
   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
   if (!m_userToken.isEmpty()) {
@@ -70,7 +90,7 @@ void AuthManager::signOut() {
 }
 
 void AuthManager::createAuthSession() {
-  QNetworkRequest request(QUrl(API_BASE_URL + "/v1/auth/sessions"));
+  QNetworkRequest request(QUrl(m_apiBaseUrl + "/v1/auth/sessions"));
   request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
   // Create the request body (empty JSON object is fine for this endpoint)
@@ -104,7 +124,7 @@ void AuthManager::onSessionTokenReceived(QNetworkReply *reply) {
     m_sessionToken = obj["token"].toString();
 
     // Now open the browser with the Google Auth URL
-    QUrl authUrl(API_BASE_URL + "/v1/auth/google");
+    QUrl authUrl(m_apiBaseUrl + "/v1/auth/google");
     QUrlQuery query;
     query.addQueryItem("token", m_sessionToken);
     authUrl.setQuery(query);
@@ -127,7 +147,7 @@ void AuthManager::startPolling(const QString &token) {
 void AuthManager::onPollTimerTimeout() {
   // Poll the server to check if authentication is complete
   QNetworkRequest request(
-      QUrl(API_BASE_URL + "/v1/auth/sessions/poll/" + m_sessionToken));
+      QUrl(m_apiBaseUrl + "/v1/auth/sessions/poll/" + m_sessionToken));
 
   QNetworkReply *reply = m_networkManager->get(request);
 
@@ -184,7 +204,7 @@ void AuthManager::getUserProfile() {
     return;
   }
 
-  QNetworkRequest request(QUrl(API_BASE_URL + "/v1/auth/me"));
+  QNetworkRequest request(QUrl(m_apiBaseUrl + "/v1/auth/me"));
   request.setRawHeader("Authorization", "Bearer " + m_userToken.toUtf8());
 
   QNetworkReply *reply = m_networkManager->get(request);

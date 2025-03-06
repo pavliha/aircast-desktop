@@ -1,6 +1,6 @@
 // qml/MainPage/UserMenuDropdown.qml
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import AircastDesktop 1.0
 
@@ -24,7 +24,7 @@ Item {
         contentItem: RowLayout {
             spacing: Theme.spacing.sm
 
-            Label {
+            Controls.Label {
                 text: root.userName
                 color: Theme.foreground
                 font.weight: Font.Medium
@@ -49,11 +49,11 @@ Item {
     }
 
     // Dropdown menu
-    Popup {
+    Controls.Popup {
         id: dropdownMenu
         width: 280
         padding: 0
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        closePolicy: Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside
 
         // Animations
         enter: Transition {
@@ -151,7 +151,7 @@ Item {
                         radius: 24
                         color: Theme.accent
 
-                        Label {
+                        Controls.Label {
                             anchors.centerIn: parent
                             text: root.userName.length > 0 ? root.userName.charAt(0).toUpperCase() : "?"
                             color: Theme.accentForeground
@@ -165,14 +165,14 @@ Item {
                         Layout.fillWidth: true
                         spacing: 4
 
-                        Label {
+                        Controls.Label {
                             text: root.userName
                             color: profileHighlightRect.visible ? Theme.accentForeground : Theme.foreground
                             font.pixelSize: 16
                             font.weight: Font.Medium
                         }
 
-                        Label {
+                        Controls.Label {
                             text: root.userEmail
                             color: profileHighlightRect.visible ? Theme.withAlpha(Theme.accentForeground, 0.8) : Theme.mutedForeground
                             font.pixelSize: 14
@@ -247,7 +247,7 @@ Item {
                         height: 16
                     }
 
-                    Label {
+                    Controls.Label {
                         text: "Sign out"
                         color: highlightRect.visible ? Theme.accentForeground : Theme.foreground
                         font.pixelSize: 14

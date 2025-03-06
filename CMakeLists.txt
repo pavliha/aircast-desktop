@@ -98,14 +98,15 @@ else()
     )
 endif()
 
+# Include the build directory to find generated config header
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+
 message(STATUS "Current source dir: ${CMAKE_CURRENT_SOURCE_DIR}")
 message(STATUS "Looking for shader in: ${CMAKE_CURRENT_SOURCE_DIR}/shaders/icon.frag")
 
 
 # -----------------------------------------------------------------------------
 # Use Qt6 shader tools to compile and embed the shader.
-# The shader file is specified with a relative path so that it is exposed with
-# the correct resource URL "qrc:/shaders/icon.frag.qsb"
 # -----------------------------------------------------------------------------
 
 message(STATUS "Shader source path: ${CMAKE_CURRENT_SOURCE_DIR}/shaders/icon.frag")
@@ -230,6 +231,33 @@ qt_add_qml_module(${PROJECT_NAME}
         QtQuick.Layouts
         QtQuick.Effects
         Qt5Compat.GraphicalEffects 
+)
+
+# -----------------------------------------------------------------------------
+# Create custom targets for running with different environments
+# -----------------------------------------------------------------------------
+add_custom_target(run_dev
+    COMMAND ${CMAKE_COMMAND} -E env "AIRCAST_API_URL=http://localhost:3333" $<TARGET_FILE:${PROJECT_NAME}>
+    DEPENDS ${PROJECT_NAME}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin
+    COMMENT "Running with development environment"
+    VERBATIM
+)
+
+add_custom_target(run_staging
+    COMMAND ${CMAKE_COMMAND} -E env "AIRCAST_API_URL=https://api.dev.aircast.one" $<TARGET_FILE:${PROJECT_NAME}>
+    DEPENDS ${PROJECT_NAME}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin
+    COMMENT "Running with staging environment"
+    VERBATIM
+)
+
+add_custom_target(run_prod
+    COMMAND ${CMAKE_COMMAND} -E env "AIRCAST_API_URL=https://api.aircast.one" $<TARGET_FILE:${PROJECT_NAME}>
+    DEPENDS ${PROJECT_NAME}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin
+    COMMENT "Running with production environment"
+    VERBATIM
 )
 
 # -----------------------------------------------------------------------------

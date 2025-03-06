@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import AircastDesktop 1.0
 
@@ -30,7 +30,7 @@ Button {
                 visible: !googleButton.isLoading
             }
 
-            BusyIndicator {
+            Controls.BusyIndicator {
                 anchors.fill: parent
                 running: googleButton.isLoading
                 visible: googleButton.isLoading

@@ -12,22 +12,31 @@ ApplicationWindow {
     title: "AirCast"
     color: Theme.background
 
-    // Create an instance of AuthManager
-    AuthManager {
-        id: authManager
+    // Instead of creating a new AuthManager, use the one provided by C++
+    Component.onCompleted: {
+        // Example usage: listen to signals or call methods on authManager
+        if (authManager.isAuthenticated) {
+            stackView.push(mainPage);
+        }
+    }
 
-        onSignInSuccessful: {
+    // Use authManager's signals by connecting to them directly in QML,
+    // or if needed, create signal handlers that call methods on authManager.
+    // For example:
+    Connections {
+        target: authManager
+
+        function onSignInSuccessful() {
             console.log("Successfully signed in!");
             stackView.push(mainPage);
         }
 
-        onAuthStatusChanged: {
+        function onAuthStatusChanged() {
             if (authManager.isAuthenticated) {
                 if (stackView.currentItem.objectName !== "mainPage") {
                     stackView.push(mainPage);
                 }
             } else {
-                // Reset to sign-in page when logged out
                 if (stackView.depth > 1) {
                     stackView.pop(null);
                 }
@@ -53,14 +62,6 @@ ApplicationWindow {
         MainPage {
             objectName: "mainPage"
             user: authManager.userData || {}
-        }
-    }
-
-    // Check authentication status on startup
-    Component.onCompleted: {
-        // If already authenticated, go to main page
-        if (authManager.isAuthenticated) {
-            stackView.push(mainPage);
         }
     }
 }

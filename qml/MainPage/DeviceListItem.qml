@@ -1,6 +1,6 @@
 // DeviceListItem.qml
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import AircastDesktop 1.0
 
@@ -28,7 +28,7 @@ Rectangle {
         spacing: Theme.spacing.md
 
         // Device name
-        Label {
+        Controls.Label {
             text: deviceName || "Unnamed Device"
             color: Theme.cardForeground
             font.pixelSize: 16

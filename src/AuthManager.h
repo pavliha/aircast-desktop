@@ -15,6 +15,8 @@ class AuthManager : public QObject {
   Q_PROPERTY(bool isAuthenticated READ isAuthenticated NOTIFY authStatusChanged)
   Q_PROPERTY(QString userToken READ userToken NOTIFY userTokenChanged)
   Q_PROPERTY(QVariantMap userData READ userData NOTIFY userDataChanged)
+  Q_PROPERTY(QString apiBaseUrl READ apiBaseUrl WRITE setApiBaseUrl NOTIFY
+                 apiBaseUrlChanged)
 
  public:
   explicit AuthManager(QObject *parent = nullptr);
@@ -22,15 +24,24 @@ class AuthManager : public QObject {
   bool isAuthenticated() const;
   QString userToken() const;
   QVariantMap userData() const;
+  QString apiBaseUrl() const { return m_apiBaseUrl; }
 
   // This method will be called from QML
   Q_INVOKABLE void startGoogleSignIn();
   Q_INVOKABLE void signOut();
 
+  QString token() const {
+    return m_userToken;
+  }  // Added for DeviceManager compatibility
+
+ public slots:
+  void setApiBaseUrl(const QString &url);
+
  signals:
   void authStatusChanged();
   void userTokenChanged();
   void userDataChanged();
+  void apiBaseUrlChanged();
   void signInSuccessful();
   void signInFailed(const QString &message);
 
@@ -49,8 +60,5 @@ class AuthManager : public QObject {
   QString m_userToken;
   QVariantMap m_userData;
   bool m_isAuthenticated;
-
-  // Base URL for your API
-  const QString API_BASE_URL =
-      "http://localhost:3333";  // Replace with your actual API URL
+  QString m_apiBaseUrl;
 };
