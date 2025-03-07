@@ -1,3 +1,4 @@
+// DeviceManager.h
 #ifndef DEVICEMANAGER_H
 #define DEVICEMANAGER_H
 
@@ -12,23 +13,18 @@
 class DeviceManager : public QObject {
   Q_OBJECT
   Q_PROPERTY(QVariantList devices READ devices NOTIFY devicesChanged)
-  Q_PROPERTY(QString apiBaseUrl READ apiBaseUrl WRITE setApiBaseUrl NOTIFY
-                 apiBaseUrlChanged)
 
  public:
-  explicit DeviceManager(QObject *parent = nullptr);
+  explicit DeviceManager(QObject *parent = nullptr,
+                         AuthManager *authManager = nullptr);
 
   QVariantList devices() const { return m_devices; }
-  QString apiBaseUrl() const { return m_apiBaseUrl; }
 
  public slots:
   void fetchDevices();
-  void setAuthManager(AuthManager *authManager);
-  void setApiBaseUrl(const QString &url);
 
  signals:
   void devicesChanged();
-  void apiBaseUrlChanged();
   void error(const QString &message);
 
  private slots:
@@ -38,7 +34,7 @@ class DeviceManager : public QObject {
  private:
   QNetworkAccessManager *m_networkManager;
   QVariantList m_devices;
-  AuthManager *m_authManager = nullptr;
+  AuthManager *m_authManager;
   QString m_apiBaseUrl;
 };
 

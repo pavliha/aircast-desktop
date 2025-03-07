@@ -26,13 +26,10 @@ int main(int argc, char *argv[]) {
 
   // Create instances of our C++ classes
   AuthManager *authManager = new AuthManager(&app);
-  DeviceManager *deviceManager = new DeviceManager(&app);
+  DeviceManager *deviceManager = new DeviceManager(&app, authManager);
   ThemeManager *themeManager = new ThemeManager(&app);
 
-  // Connect the AuthManager to DeviceManager
-  deviceManager->setAuthManager(authManager);
-
-  // Create QML Engine
+    // Create QML Engine
   QQmlApplicationEngine engine;
 
   // Expose C++ objects to QML

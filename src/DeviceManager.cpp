@@ -1,26 +1,27 @@
+// DeviceManager.cpp
 #include "DeviceManager.h"
 
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>
 
-DeviceManager::DeviceManager(QObject *parent) : QObject(parent) {
+DeviceManager::DeviceManager(QObject *parent, AuthManager *authManager)
+    : QObject(parent), m_authManager(authManager) {
   m_networkManager = new QNetworkAccessManager(this);
 
-  // Initialize API URL from environment variable with fallback
+  // Use the same API URL as AuthManager
   m_apiBaseUrl =
       qEnvironmentVariable("AIRCAST_API_URL", "http://localhost:3333");
 
   qDebug() << "Device Manager using API URL:" << m_apiBaseUrl;
-}
 
-void DeviceManager::setApiBaseUrl(const QString &url) {
-  if (m_apiBaseUrl != url) {
-    m_apiBaseUrl = url;
-    emit apiBaseUrlChanged();
+  // Connect to auth status changes
+  if (m_authManager) {
+    connect(m_authManager, &AuthManager::authStatusChanged, this,
+            &DeviceManager::onAuthStatusChanged);
 
-    // Refresh devices when URL changes
-    if (m_authManager && m_authManager->isAuthenticated()) {
+    // Initial fetch if already authenticated
+    if (m_authManager->isAuthenticated()) {
       fetchDevices();
     }
   }
@@ -40,27 +41,6 @@ void DeviceManager::fetchDevices() {
   QNetworkReply *reply = m_networkManager->get(request);
   connect(reply, &QNetworkReply::finished, this,
           [this, reply]() { handleNetworkReply(reply); });
-}
-
-void DeviceManager::setAuthManager(AuthManager *authManager) {
-  if (m_authManager != authManager) {
-    // Disconnect previous connections
-    if (m_authManager) {
-      disconnect(m_authManager, &AuthManager::authStatusChanged, this,
-                 &DeviceManager::onAuthStatusChanged);
-    }
-
-    m_authManager = authManager;
-
-    if (m_authManager) {
-      // Connect to auth status changes
-      connect(m_authManager, &AuthManager::authStatusChanged, this,
-              &DeviceManager::onAuthStatusChanged);
-
-      // Just set the API URL once here
-      setApiBaseUrl(m_authManager->apiBaseUrl());
-    }
-  }
 }
 
 void DeviceManager::handleNetworkReply(QNetworkReply *reply) {
