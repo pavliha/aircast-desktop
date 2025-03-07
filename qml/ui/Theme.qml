@@ -3,14 +3,14 @@ import QtQuick 2.15
 import AircastDesktop 1.0
 
 QtObject {
-    // Use the darkMode property from the C++ ThemeChecker singleton.
-    readonly property bool isDark: themeChecker.darkMode
+    // Use the darkMode property from the C++ themeManager singleton.
+    readonly property bool isDark: themeManager.darkMode
     // A convenience property that returns a string "dark" or "light"
     readonly property string mode: isDark ? "dark" : "light"
 
     // Set up a connection to handle theme changes
     property Connections themeConnection: Connections {
-        target: themeChecker
+        target: themeManager
         function onDarkModeChanged() {
             // Force a re-evaluation of all theme properties
             themeChangeNotifier.notify();

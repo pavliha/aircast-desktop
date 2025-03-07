@@ -20,8 +20,8 @@ Item {
         variant: "outline"
 
         contentItem: Icon {
-            // The Icon updates automatically when themeChecker.themeMode changes.
-            source: themeChecker.themeMode === "Light" ? "qrc:/AircastDesktop/assets/icons/sun.svg" : themeChecker.themeMode === "Dark" ? "qrc:/AircastDesktop/assets/icons/moon.svg" : "qrc:/AircastDesktop/assets/icons/monitor.svg"
+            // The Icon updates automatically when themeManager.themeMode changes.
+            source: themeManager.themeMode === "Light" ? "qrc:/AircastDesktop/assets/icons/sun.svg" : themeManager.themeMode === "Dark" ? "qrc:/AircastDesktop/assets/icons/moon.svg" : "qrc:/AircastDesktop/assets/icons/monitor.svg"
             color: Theme.foreground
             width: 20
             height: 20
@@ -90,12 +90,11 @@ Item {
                 delegate: ThemeItemDelegate {
                     // Pass modelData as theme name
                     themeName: modelData
-                    isSelected: themeChecker.themeMode === modelData
+                    isSelected: themeManager.themeMode === modelData
 
                     // Handle the custom signal to switch themes
                     onThemeSelected: {
-                        console.log("Setting theme mode to: " + themeName);
-                        themeChecker.setThemeMode(themeName);
+                        themeManager.setThemeMode(themeName);
                         dropdownMenu.close();
                     }
                 }

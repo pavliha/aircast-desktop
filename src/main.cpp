@@ -8,7 +8,7 @@
 
 #include "AuthManager.h"
 #include "DeviceManager.h"
-#include "ThemeChecker.h"
+#include "ThemeManager.h"
 
 using namespace Qt::StringLiterals;
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
   // Create instances of our C++ classes
   AuthManager *authManager = new AuthManager(&app);
   DeviceManager *deviceManager = new DeviceManager(&app);
-  ThemeChecker *themeChecker = new ThemeChecker(&app);
+  ThemeManager *themeManager = new ThemeManager(&app);
 
   // Connect the AuthManager to DeviceManager
   deviceManager->setAuthManager(authManager);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
   // Expose C++ objects to QML
   engine.rootContext()->setContextProperty("authManager", authManager);
   engine.rootContext()->setContextProperty("deviceManager", deviceManager);
-  engine.rootContext()->setContextProperty("themeChecker", themeChecker);
+  engine.rootContext()->setContextProperty("themeManager", themeManager);
 
   // Load main QML file
   const QUrl url(u"qrc:/AircastDesktop/qml/main.qml"_s);

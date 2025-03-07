@@ -73,7 +73,8 @@ if(APPLE)
         src/AuthManager.cpp
         src/DeviceManager.h
         src/DeviceManager.cpp
-        src/ThemeChecker.h
+        src/ThemeManager.h
+        src/ThemeManager.cpp
     )
     
     # Set app icon for macOS
@@ -94,7 +95,8 @@ else()
         src/AuthManager.cpp
         src/DeviceManager.h
         src/DeviceManager.cpp
-        src/ThemeChecker.h
+        src/ThemeManager.h
+        src/ThemeManager.cpp
     )
 endif()
 
