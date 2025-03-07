@@ -229,8 +229,7 @@ Item {
 
                     onClicked: {
                         dropdownMenu.close();
-                        console.log("Sign out clicked");
-                        // Handle sign out logic here
+                        authManager.signOut();
                     }
                 }
 
