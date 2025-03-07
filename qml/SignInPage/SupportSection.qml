@@ -12,7 +12,7 @@ RowLayout {
         font.pixelSize: 14
     }
 
-    LinkText {
+    Link {
         text: "Contact Support"
         font.pixelSize: 14
         font.weight: Font.Medium

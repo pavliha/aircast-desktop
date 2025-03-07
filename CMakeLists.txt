@@ -172,7 +172,7 @@ set(MYPROJECT_QML_FILES
     qml/SignInPage/BrandSection.qml
     qml/SignInPage/SupportSection.qml
     qml/SignInPage/SignInWithGoogleButton.qml
-    qml/LinkText.qml
+    qml/Link.qml
     qml/Separator.qml
     # UI Components
     qml/ui/Button.qml

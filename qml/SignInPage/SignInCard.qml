@@ -39,7 +39,7 @@ Card {
                 Layout.alignment: Qt.AlignHCenter
                 spacing: 4
 
-                LinkText {
+                Link {
                     text: "Terms of Service"
                     hoverable: true
                     onClicked: Qt.openUrlExternally("https://aircast.one/terms")
@@ -51,7 +51,7 @@ Card {
                     font.pixelSize: 12
                 }
 
-                LinkText {
+                Link {
                     text: "Privacy Policy"
                     hoverable: true
                     onClicked: Qt.openUrlExternally("https://aircast.one/privacy")
