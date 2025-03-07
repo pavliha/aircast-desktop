@@ -8,25 +8,31 @@ ItemDelegate {
     id: control
     width: parent.width
     height: 40
+    clip: true                     // Ensure children (like the MouseArea) don’t render outside the delegate.
     property bool isSelected: false
     property string themeName: ""
 
-    // Signal to notify that a theme was selected.
+    // Bind a property directly to the MouseArea’s containsMouse.
+    property bool customHovered: extendedArea.containsMouse
+
     signal themeSelected(string theme)
 
-    // Add a MouseArea that extends beyond the delegate’s bounds
     MouseArea {
         id: extendedArea
-        anchors.fill: parent
-        // Extend the hit area by 4 pixels on each side.
-        anchors.margins: -4
+        // Anchor to all sides
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        // Extend horizontally only:
+        anchors.leftMargin: -4
+        anchors.rightMargin: -4
+        anchors.topMargin: 0
+        anchors.bottomMargin: 0
         hoverEnabled: true
         onClicked: {
-            // Emit our custom signal with the theme name.
             themeSelected(control.themeName);
         }
-        onEntered: control.hovered = true
-        onExited: control.hovered = false
     }
 
     background: Rectangle {
@@ -34,7 +40,7 @@ ItemDelegate {
         color: {
             if (isSelected)
                 return Theme.accent;
-            if (control.hovered)
+            if (control.customHovered)
                 return Theme.withAlpha(Theme.accent, 0.2);
             return "transparent";
         }
@@ -46,10 +52,9 @@ ItemDelegate {
         }
     }
 
-    // Wrap the content in a container with extra padding.
     contentItem: RowLayout {
         anchors.fill: parent
-        anchors.margins: 4  // internal padding for a more generous hover area
+        anchors.margins: 4  // Internal padding
         spacing: 12
 
         Icon {
