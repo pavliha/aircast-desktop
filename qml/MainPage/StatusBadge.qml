@@ -1,7 +1,5 @@
 // StatusBadge.qml
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
 import AircastDesktop 1.0
 
 Rectangle {

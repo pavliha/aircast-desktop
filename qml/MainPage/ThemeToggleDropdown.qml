@@ -28,6 +28,7 @@ Item {
         }
 
         onClicked: {
+            // Just toggle the menu open or closed
             if (dropdownMenu.visible) {
                 dropdownMenu.close();
             } else {
@@ -35,8 +36,7 @@ Item {
             }
         }
     }
-
-    // Dropdown menu
+    // Dropdown menu content
     Controls.Popup {
         id: dropdownMenu
         width: 180
@@ -88,14 +88,14 @@ Item {
             Repeater {
                 model: ["Light", "Dark", "System"]
                 delegate: ThemeItemDelegate {
-                    required property string modelData
-                    required property int index
-
+                    // Pass modelData as theme name
                     themeName: modelData
                     isSelected: themeChecker.themeMode === modelData
 
-                    onClicked: {
-                        themeChecker.setThemeMode(modelData);
+                    // Handle the custom signal to switch themes
+                    onThemeSelected: {
+                        console.log("Setting theme mode to: " + themeName);
+                        themeChecker.setThemeMode(themeName);
                         dropdownMenu.close();
                     }
                 }

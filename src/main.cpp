@@ -1,12 +1,16 @@
+// main.cpp
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickStyle>
+#include <QtCore/QString>
 
 #include "AuthManager.h"
 #include "DeviceManager.h"
 #include "ThemeChecker.h"
+
+using namespace Qt::StringLiterals;
 
 int main(int argc, char *argv[]) {
   QGuiApplication app(argc, argv);
@@ -37,8 +41,7 @@ int main(int argc, char *argv[]) {
   engine.rootContext()->setContextProperty("themeChecker", themeChecker);
 
   // Load main QML file
-  const QUrl url(u"qrc:/AircastDesktop/qml/main.qml"_qs);
-
+  const QUrl url(u"qrc:/AircastDesktop/qml/main.qml"_s);
   QObject::connect(
       &engine, &QQmlApplicationEngine::objectCreated, &app,
       [url](QObject *obj, const QUrl &objUrl) {

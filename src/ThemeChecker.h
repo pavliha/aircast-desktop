@@ -1,3 +1,4 @@
+// ThemeChecker.h
 #pragma once
 #include <QGuiApplication>
 #include <QObject>
@@ -56,15 +57,27 @@ class ThemeChecker : public QObject {
   }
 
   Q_INVOKABLE void setThemeMode(const QString &mode) {
+    qDebug() << "setThemeMode called with:" << mode;
+
     if (mode == "System") {
       m_themeOverride = false;
       QSettings settings;
       settings.setValue("theme/override", false);
       emit darkModeChanged();
     } else if (mode == "Light") {
-      setDarkMode(false);
+      m_themeOverride = true;  // Set override to true
+      m_manualDarkMode = false;
+      QSettings settings;
+      settings.setValue("theme/override", true);
+      settings.setValue("theme/darkMode", false);
+      emit darkModeChanged();
     } else if (mode == "Dark") {
-      setDarkMode(true);
+      m_themeOverride = true;  // Set override to true
+      m_manualDarkMode = true;
+      QSettings settings;
+      settings.setValue("theme/override", true);
+      settings.setValue("theme/darkMode", true);
+      emit darkModeChanged();
     }
   }
 
