@@ -1,4 +1,4 @@
-// qml/SignInPage/SignInPage.qml
+// SignInPage.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -10,21 +10,7 @@ Page {
 
     header: Header {}
 
-    background: Rectangle {
-        anchors.fill: parent
-        color: Theme.background
-        gradient: Gradient {
-            orientation: Gradient.Vertical
-            GradientStop {
-                position: 0.0
-                color: Theme.isDark ? Theme.card : Theme.background
-            }
-            GradientStop {
-                position: 1.0
-                color: Theme.background
-            }
-        }
-    }
+    background: PageBackground {}
 
     ColumnLayout {
         id: contentLayout

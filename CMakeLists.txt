@@ -189,6 +189,8 @@ set(MYPROJECT_QML_FILES
     qml/ui/card/CardFooter.qml
     qml/ui/card/CardHeader.qml
     qml/ui/card/CardTitle.qml
+    # Base Components
+    qml/PageBackground.qml
 )
 
 # Define singleton QML files separately

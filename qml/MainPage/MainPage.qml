@@ -16,9 +16,7 @@ Page {
         }
     }
 
-    background: Rectangle {
-        color: Theme.background
-    }
+    background: PageBackground {}
 
     ColumnLayout {
         anchors.fill: parent
