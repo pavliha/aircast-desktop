@@ -1,4 +1,3 @@
-// DeviceManager.h
 #ifndef DEVICEMANAGER_H
 #define DEVICEMANAGER_H
 
@@ -7,6 +6,7 @@
 #include <QNetworkReply>
 #include <QObject>
 #include <QVariantList>
+#include <QVariantMap>
 
 #include "AuthManager.h"
 
@@ -19,6 +19,9 @@ class DeviceManager : public QObject {
                          AuthManager *authManager = nullptr);
 
   QVariantList devices() const { return m_devices; }
+
+  // Add a new method to get device by ID
+  Q_INVOKABLE QVariantMap getDeviceById(const QString &deviceId) const;
 
  public slots:
   void fetchDevices();

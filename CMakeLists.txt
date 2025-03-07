@@ -176,6 +176,8 @@ set(MYPROJECT_QML_FILES
     qml/SignInPage/SignInWithGoogleButton.qml
     qml/Link.qml
     qml/Separator.qml
+     # DevicePage Components
+     qml/DevicePage/DevicePage.qml
     # UI Components
     qml/ui/Button.qml
     qml/ui/Icon.qml

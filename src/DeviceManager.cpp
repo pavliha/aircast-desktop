@@ -78,3 +78,13 @@ void DeviceManager::onAuthStatusChanged() {
     emit devicesChanged();
   }
 }
+
+QVariantMap DeviceManager::getDeviceById(const QString &deviceId) const {
+  for (const QVariant &device : m_devices) {
+    QVariantMap deviceMap = device.toMap();
+    if (deviceMap["id"].toString() == deviceId) {
+      return deviceMap;
+    }
+  }
+  return QVariantMap();  // Return empty map if not found
+}

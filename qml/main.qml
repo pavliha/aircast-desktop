@@ -62,6 +62,24 @@ ApplicationWindow {
         MainPage {
             objectName: "mainPage"
             user: authManager.userData || {}
+            onDeviceConnectRequested: function (deviceId, deviceName) {
+                stackView.push(devicePage, {
+                    deviceId: deviceId,
+                    deviceName: deviceName
+                });
+            }
+        }
+    }
+
+    // Add the DevicePage component
+    Component {
+        id: devicePage
+        DevicePage {
+            objectName: "devicePage"
+
+            onBackRequested: {
+                stackView.pop();
+            }
         }
     }
 }

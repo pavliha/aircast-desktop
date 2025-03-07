@@ -9,6 +9,8 @@ Page {
 
     property var user: ({})
 
+    signal deviceConnectRequested(string deviceId)
+
     header: Header {
         UserMenuDropdown {
             userName: user && user["name"] ? user["name"] : ""
@@ -27,6 +29,9 @@ Page {
         InfoBanner {}
         DeviceList {
             model: deviceManager.devices
+            onDeviceConnectClicked: function (deviceId) {
+                deviceConnectRequested(deviceId);
+            }
         }
     }
 
