@@ -44,6 +44,7 @@ void DeviceManager::fetchDevices() {
 
 void DeviceManager::setAuthManager(AuthManager *authManager) {
   if (m_authManager != authManager) {
+    // Disconnect previous connections
     if (m_authManager) {
       disconnect(m_authManager, &AuthManager::authStatusChanged, this,
                  &DeviceManager::onAuthStatusChanged);
@@ -52,17 +53,12 @@ void DeviceManager::setAuthManager(AuthManager *authManager) {
     m_authManager = authManager;
 
     if (m_authManager) {
+      // Connect to auth status changes
       connect(m_authManager, &AuthManager::authStatusChanged, this,
               &DeviceManager::onAuthStatusChanged);
 
-      // Sync API URLs
-      connect(m_authManager, &AuthManager::apiBaseUrlChanged, this,
-              [this]() { setApiBaseUrl(m_authManager->apiBaseUrl()); });
-
-      // Initial sync
-      if (!m_authManager->apiBaseUrl().isEmpty()) {
-        setApiBaseUrl(m_authManager->apiBaseUrl());
-      }
+      // Just set the API URL once here
+      setApiBaseUrl(m_authManager->apiBaseUrl());
     }
   }
 }
